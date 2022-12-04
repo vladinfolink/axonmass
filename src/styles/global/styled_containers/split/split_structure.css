@@ -1,0 +1,16 @@
+:root {
+  --focus-border: #4e4e4e;
+  --separator-border: transparent;
+}
+
+.sash-horizontal::before{
+  border-top: 2px dotted #585858;
+  border-bottom: 2px dotted #585858;
+}
+
+.sash-vertical::before{
+  border: 1px dotted rgb(71, 71, 71);
+  background: #585858;
+}
+
+/* 585858 */
