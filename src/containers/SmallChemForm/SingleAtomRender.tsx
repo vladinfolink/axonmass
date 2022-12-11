@@ -51,3 +51,9 @@ export const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shell
     />
   </>
 };
+
+// la notar hotararea aga + buletin contabil
+// imputernicire notariala 
+
+// imputernicvire pt hotarere radiere
+// 

@@ -2,64 +2,60 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Allotment } from "allotment";
 import SmallChemForm from '../../../../containers/SmallChemForm';
-
 import debounce from 'lodash/debounce';
-
 import "allotment/dist/style.css";
 import './split_structure.css';
 import { registerPanelSize } from '../../../../redux_store/actions';
 
-type Props = {
-  registerPanelSize?: any;
-}
+type Props = { registerPanelSize?: any; }
 
-// eslint-disable-next-line no-empty-pattern
 function SplitStructure({ registerPanelSize }: Props) {
   const changeHandler = (sizes: number[], panelId: string) => {
-    console.log(sizes, panelId);
-    registerPanelSize('E_0', sizes[0]);
-    registerPanelSize('E_1', sizes[1]);
+    console.log(panelId, sizes);
 
+    const panels: {
+      [key: string]: any;
+    } = {
+      'D_E': () => {
+        registerPanelSize('D', sizes[0]);
+        registerPanelSize('E', sizes[1]);
+      },
+      'A_B_C': () => {
+        registerPanelSize('A', sizes[0]);
+        registerPanelSize('B', sizes[1]);
+        registerPanelSize('C', sizes[2]);
+      },
+      'C': () => {
+        registerPanelSize('C', sizes[0]);
+      }
+    };
+      panels[panelId]();
   };
 
-  const debouncedChangeHandler = useMemo(
-    () => debounce(changeHandler, 600)
-    , []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedChangeHandler_A_B_C = useMemo(() => debounce(changeHandler, 600), []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedChangeHandler_D_E = useMemo(() => debounce(changeHandler, 600), []);
+
+  const A_B_C = <Allotment >
+    <Allotment  onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
+      <Allotment.Pane > {/* A */}A </Allotment.Pane>
+      <Allotment.Pane> {/* B */}B </Allotment.Pane>
+      <Allotment.Pane> {/* C */}C </Allotment.Pane>
+    </Allotment>
+  </Allotment>;
+
+  const D_group = <Allotment> {/* D */} <SmallChemForm /> </Allotment>
 
   return (
     <>
-      <Allotment onChange={(sizes) => debouncedChangeHandler(sizes, 'E')}>
-
+      <Allotment onChange={(sizes) => debouncedChangeHandler_D_E(sizes, 'D_E')}>
         <Allotment vertical>
-
-          <Allotment minSize={100}>
-
-            <Allotment minSize={100}>
-
-              <Allotment.Pane minSize={100}>
-                {/* A */}A
-              </Allotment.Pane>
-
-              <Allotment.Pane minSize={100}>
-                {/* B */}B
-              </Allotment.Pane>
-            </Allotment>
-
-            <Allotment.Pane minSize={100}>
-              {/* C */}C
-            </Allotment.Pane>
-          </Allotment>
-
-          <Allotment.Pane minSize={100}>
-            {/* D */}D
-            <SmallChemForm />
-          </Allotment.Pane>
+          {A_B_C}
+          {D_group}
         </Allotment>
-
         <Allotment minSize={400}>
-          <Allotment.Pane minSize={100}>
-            {/* E */}E
-          </Allotment.Pane>
+          <Allotment.Pane minSize={400}> {/* E */}E </Allotment.Pane>
         </Allotment>
 
       </Allotment>
@@ -68,7 +64,7 @@ function SplitStructure({ registerPanelSize }: Props) {
 }
 
 function mapStateToProps(state: any): any {
-  return {...state}
+  return { ...state }
 };
 
 const mapDispatchToProps: any = {
