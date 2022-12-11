@@ -6,18 +6,6 @@ import { ChemicalElement } from './ChemicalElement';
 
 import { filterElements } from '../../redux_store/actions';
 
-
-
-export const StyledMainContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  flex-basis: 100%;
-  height: 40vh;
-`;
-
 const ChemElementCollection = styled.div`
   display: flex;
   align-items: center;
@@ -95,13 +83,11 @@ function SmallChemForm({ filteredElements, filterElements }: any) {
 
   return (
     <>
-      <StyledMainContainer>
-        {chemicalElementSearch}
-        <ChemElementCollection>
-          {boxElements}
-          {placeholders}
-        </ChemElementCollection>
-      </StyledMainContainer>
+      {chemicalElementSearch}
+      <ChemElementCollection>
+        {boxElements}
+        {placeholders}
+      </ChemElementCollection>
     </>
   )
 }

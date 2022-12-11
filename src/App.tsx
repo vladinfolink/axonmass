@@ -22,7 +22,7 @@ function App() {
       <GlobalStyle />
       <FontStyle />
       <Provider store={store}>
-        <SplitStructure render={null} />
+        <SplitStructure />
       </Provider></>
   );
 }
