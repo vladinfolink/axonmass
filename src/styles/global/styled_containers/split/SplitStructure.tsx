@@ -16,20 +16,19 @@ function SplitStructure({ registerPanelSize }: Props) {
     const panels: {
       [key: string]: any;
     } = {
-      'D_E': () => {
-        registerPanelSize('D', sizes[0]);
-        registerPanelSize('E', sizes[1]);
-      },
       'A_B_C': () => {
         registerPanelSize('A', sizes[0]);
         registerPanelSize('B', sizes[1]);
         registerPanelSize('C', sizes[2]);
       },
-      'C': () => {
-        registerPanelSize('C', sizes[0]);
+      'D_E': () => {
+        registerPanelSize('D', sizes[0]);
+        registerPanelSize('E', sizes[1]);
       },
-      'X_Y': () => {
-        registerPanelSize('C', sizes);
+      'HEIGHTS': () => {
+        registerPanelSize('HEIGHTS_A_B_C', sizes[0]);
+        registerPanelSize('HEIGHT_D', sizes[1]);
+        registerPanelSize('HEIGHT_E', sizes[0] +  sizes[1]);
       }
     };
       panels[panelId]();
@@ -57,7 +56,7 @@ function SplitStructure({ registerPanelSize }: Props) {
     <>
       <Allotment onChange={(sizes) => debouncedChangeHandler_D_E(sizes, 'D_E')}>
         
-        <Allotment onChange={(sizes) => debouncedChangeHandler_X_Y(sizes, 'X_Y')} vertical>
+        <Allotment onChange={(sizes) => debouncedChangeHandler_X_Y(sizes, 'HEIGHTS')} vertical>
           {A_B_C}
           {D_group}
         </Allotment>

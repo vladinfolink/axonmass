@@ -1,15 +1,71 @@
 /* eslint-disable import/no-anonymous-default-export */
 
-export default (s = {
-  A: 1, B: 1, C: 1, D: 1, E: 1
-}, action: { type: string; panelId: string; value: number}) => {
+interface IPanelValue {
+  height: number,
+  width: number
+}
+
+const defaultPanelValues = {
+  width: 1,
+  height: 1
+};
+
+export default (s: {
+  [key: string]: IPanelValue
+} = {
+    A: { ...defaultPanelValues },
+    B: { ...defaultPanelValues },
+    C: { ...defaultPanelValues },
+    D: { ...defaultPanelValues },
+    E: { ...defaultPanelValues },
+  },
+  action: {
+    type: string;
+    panelId: string;
+    value: IPanelValue
+  }) => {
   switch (action.type) {
-    case 'REGISTER_PANEL_SIZE':
+    case 'REGISTER_PANEL_WIDTH':
       return {
         ...s,
-        [action.panelId]: action.value
+        [action.panelId]: {
+          ...s[action.panelId],
+          width: action.value
+        }
+      };
+    case 'REGISTER_PANEL_HEIGHTS_A_B_C':
+      return {
+        ...s,
+        A: {
+          ...s['A'],
+          height: action.value
+        },
+        B: {
+          ...s['B'],
+          height: action.value
+        },
+        C: {
+          ...s['C'],
+          height: action.value
+        }
+      };
+    case 'REGISTER_PANEL_HEIGHT_D':
+      return {
+        ...s,
+        D: {
+          ...s['D'],
+          height: action.value
+        }
+      };
+    case 'REGISTER_PANEL_HEIGHT_E':
+      return {
+        ...s,
+        E: {
+          ...s['E'],
+          height: action.value
+        }
       };
     default:
-      return {...s};
+      return { ...s };
   }
 };
