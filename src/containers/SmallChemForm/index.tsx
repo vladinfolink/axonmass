@@ -2,29 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled, { ThemedStyledProps } from 'styled-components';
 
-import { ChemicalElement } from './ChemicalElement';
+import ChemicalElement  from './ChemicalElement';
 
 import { filterElements } from '../../redux_store/actions';
+
+type FilteredChemicalElementBoxPropsType = ThemedStyledProps<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
+  D: { width: number, height: number }
+}, any>;
+
+const calculateHeight = (percent: number, total: number) => `${percent / 100 * total}px`;
+const calculateWidth = (percent: number, total: number) => `${percent / 100 * total}px`;
 
 const CommonFlexStyle = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  border: 1px solid #5A5A5A;
-`
+  justify-content: space-evenly;
+`;
 
 const ChemSearchInputContainer = styled.div`
   flex-basis: 90%;
   display: flex;
+  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeight(14, props.D.height)};
 
   input {
-    font-size: 32px;
+    font-size: 22px;
     flex-basis: 100%;
     text-align: center;
-    background-color: #636363;
+    background-color: #1C1C1E;
     border: none;
     border-radius: 6px;
-    color: #B4B4B4;
+    color: #B1B0B2;
 
     :focus{
       outline: none;
@@ -34,23 +41,15 @@ const ChemSearchInputContainer = styled.div`
 
 const ChemElementCollection = styled(CommonFlexStyle)``;
 
-type FilteredChemicalElementBoxPropsType = ThemedStyledProps<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-  width: number; height: number;
-}, any>
-
-const FilteredChemicalElementBox: any = styled.div.attrs(
-  (props: FilteredChemicalElementBoxPropsType) => ({
-
-  }))`
-  flex-basis: 19.6%;
+const FilteredChemicalElementBox = styled.div`
+  flex-basis: 20%;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  height: ${(props: FilteredChemicalElementBoxPropsType) => `${props.height / 2}px`};
-  justify-content: center;
-  background-color: #636363;
-  border-radius: 6px;
-  border: 1px dashed #5A5A5A;
+  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeight(60, props.D.height)};
+  justify-content: space-evenly;
+  background-color: #1C1C1E;
+  border: 1px dotted #585858;
 `;
 
 function SmallChemForm({
@@ -65,7 +64,9 @@ function SmallChemForm({
     filterElements(value);
   }
 
-  const chemicalElementSearch = <ChemSearchInputContainer>
+  const chemicalElementSearch = <ChemSearchInputContainer
+    D={panelSizes.D}
+  >
     <input type="text" placeholder="SEARCH.." onChange={(e) => onInputChange(e)}></input>
   </ChemSearchInputContainer>;
 
@@ -74,7 +75,7 @@ function SmallChemForm({
     return (
       <FilteredChemicalElementBox
         key={`filtered-chem-el-${idx}`}
-        height={panelSizes.D.height}
+        D={panelSizes.D}
       >
         <ChemicalElement {...chemicalElementProps} key={filteredElement.name} />
       </FilteredChemicalElementBox>
@@ -87,12 +88,12 @@ function SmallChemForm({
     ).fill(null).map((placeholder, idx) => {
       return (<FilteredChemicalElementBox
         key={`placeholder-${idx}`}
-        height={panelSizes.D.height}
+        D={panelSizes.D}
       />);
     })),
     <FilteredChemicalElementBox
       key={`placeholder-last-and-control`}
-      height={panelSizes.D.height}
+      D={panelSizes.D}
     >
       {/* <p>CONTROL</p> */}
     </FilteredChemicalElementBox>

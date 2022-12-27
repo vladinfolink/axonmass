@@ -1,16 +1,16 @@
 :root {
-  --focus-border: #4e4e4e;
+  --focus-border: rgba(42, 43, 29, 0.4);;
   --separator-border: transparent;
 }
 
 .sash-horizontal::before{
-  border-top: 2px dotted #585858;
-  border-bottom: 2px dotted #585858;
+  border-top: 1px dotted #2e2e2e;
+  border-bottom: 1px dotted #2e2e2e;
 }
 
 .sash-vertical::before{
-  border: 1px dotted rgb(71, 71, 71);
-  background: #585858;
+  border: 1px dotted #2e2e2e;
+  background: rgba(42, 43, 29, 0.2);
 }
 
 /* 585858 */

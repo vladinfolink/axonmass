@@ -7,14 +7,16 @@ function getWindowDimensions() {
   return { width, height };
 };
 
+const calculateHeight = (percent: number, total: number) => percent / 100 * total;
+
 const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells }, panelSizes }: any) => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const fgRef: React.MutableRefObject<any> = useRef();
   const protons = new Array(number).fill(null).map((proton, idx) => {
-    return { id: `proton-${idx}`, type: 'proton', color: '#D14836' }
+    return { id: `proton-${idx}`, type: 'proton', color: '#1153A9' }
   });
   const protonLinks = protons.map((p, idx) => { return { source: 'proton-0', target: p.id } });
-  const neutrons = new Array(Math.floor(atomic_mass - number)).fill(null).map((neutron, idx) => { return { id: `neutron-${idx}`, type: 'neutron', color: '#11312D' } });
+  const neutrons = new Array(Math.floor(atomic_mass - number)).fill(null).map((neutron, idx) => { return { id: `neutron-${idx}`, type: 'neutron', color: '#99CA3C' } });
   const neutronLinks = neutrons.map((l, idx) => { return { source: 'proton-0', target: l.id } });
   const electrons = shells.reduce((ini: any, shell: any, idx: any) => {
     const electronsForShell = new Array(shell).fill(null).map((electron) => { return { type: 'electron', color: 'blue', electronInShell: idx + 1, nrOfElectronsInShell: shell }; });
@@ -29,9 +31,10 @@ const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells }, pa
   });
   const displayElectrons = false;
   const data = {
-    nodes: [...protons, ...neutrons, ...(displayElectrons ? electrons : [])],
-    links: [...protonLinks, ...neutronLinks, ...displayElectrons ? electronsLinks : []]
+    nodes: [...neutrons, ...protons, ...(displayElectrons ? electrons : [])],
+    links: [...neutronLinks, ...protonLinks, ...displayElectrons ? electronsLinks : []]
   };
+
 
   useEffect(() => {
     fgRef?.current.d3Force('link').distance((link: any) => {
@@ -45,8 +48,8 @@ const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells }, pa
   return <>
     <ForceGraph3D
       ref={fgRef}
-      width={panelSizes.D.width / 5.2} height={windowDimensions.height * 0.18}
-      backgroundColor={'#5A5A5A'} nodeLabel="type" nodeAutoColorBy="type"
+      width={panelSizes.D.width / 5.1} height={calculateHeight(45, panelSizes.D.height)}
+      backgroundColor={'#1C1C1E'} nodeLabel="type" nodeAutoColorBy="type"
       graphData={{ ...data }}
       showNavInfo={false} nodeVal={16} nodeResolution={32} nodeOpacity={1} linkVisibility={false} cooldownTicks={100}
       onEngineStop={() => (fgRef as any)?.current?.zoomToFit(400)}
@@ -60,7 +63,7 @@ function mapStateToProps(state: any) {
   };
 };
 
-const mapDispatchToProps = { };
+const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
