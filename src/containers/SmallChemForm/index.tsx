@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled, { ThemedStyledProps } from 'styled-components';
 
@@ -35,18 +35,18 @@ const ChemSearchInputContainer = styled.div`
 const ChemElementCollection = styled(CommonFlexStyle)``;
 
 type FilteredChemicalElementBoxPropsType = ThemedStyledProps<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-  height: number;
+  width: number; height: number;
 }, any>
 
 const FilteredChemicalElementBox: any = styled.div.attrs(
   (props: FilteredChemicalElementBoxPropsType) => ({
-    height: `${props.height}px`
+
   }))`
   flex-basis: 19.6%;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  height: ${(props: FilteredChemicalElementBoxPropsType) => props.height}px;
+  height: ${(props: FilteredChemicalElementBoxPropsType) => `${props.height / 2}px`};
   justify-content: center;
   background-color: #636363;
   border-radius: 6px;
