@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { ThemedStyledProps } from 'styled-components';
 
 import { ChemicalElement } from './ChemicalElement';
 
 import { filterElements } from '../../redux_store/actions';
 
-const commonFlexStyle = `
+const CommonFlexStyle = styled.div`
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 1px solid #5A5A5A;
 `
 
 const ChemSearchInputContainer = styled.div`
@@ -31,23 +32,32 @@ const ChemSearchInputContainer = styled.div`
   }
 `;
 
-const ChemElementCollection = styled.div`
-  ${commonFlexStyle}
-  justify-content: space-around;
-  border: 1px solid #5A5A5A;
-`;
+const ChemElementCollection = styled(CommonFlexStyle)``;
 
-const FilteredChemicalElementBox = styled.div`
-  ${commonFlexStyle}
-  justify-content: center;
-  height: 31.4vh;
+type FilteredChemicalElementBoxPropsType = ThemedStyledProps<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
+  height: number;
+}, any>
+
+const FilteredChemicalElementBox: any = styled.div.attrs(
+  (props: FilteredChemicalElementBoxPropsType) => ({
+    height: `${props.height}px`
+  }))`
   flex-basis: 19.6%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  height: ${(props: FilteredChemicalElementBoxPropsType) => props.height}px;
+  justify-content: center;
   background-color: #636363;
   border-radius: 6px;
   border: 1px dashed #5A5A5A;
 `;
 
-function SmallChemForm({ filteredElements, filterElements }: any) {
+function SmallChemForm({
+  table: { filteredElements },
+  filterElements,
+  panelSizes
+}: any) {
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     e.stopPropagation();
@@ -62,7 +72,10 @@ function SmallChemForm({ filteredElements, filterElements }: any) {
   const boxElements = [...filteredElements.slice(0, 4)].map((filteredElement: any, idx) => {
     const chemicalElementProps = { filteredElement };
     return (
-      <FilteredChemicalElementBox key={`filtered-chem-el-${idx}`}>
+      <FilteredChemicalElementBox
+        key={`filtered-chem-el-${idx}`}
+        height={panelSizes.D.height}
+      >
         <ChemicalElement {...chemicalElementProps} key={filteredElement.name} />
       </FilteredChemicalElementBox>
     );
@@ -72,11 +85,16 @@ function SmallChemForm({ filteredElements, filterElements }: any) {
     ...(new Array(
       4 - boxElements.length
     ).fill(null).map((placeholder, idx) => {
-      return (<FilteredChemicalElementBox key={`placeholder-${idx}`} />);
+      return (<FilteredChemicalElementBox
+        key={`placeholder-${idx}`}
+        height={panelSizes.D.height}
+      />);
     })),
     <FilteredChemicalElementBox
-      key={`placeholder-last-and-control`}>
-      <p>CONTROL</p>
+      key={`placeholder-last-and-control`}
+      height={panelSizes.D.height}
+    >
+      {/* <p>CONTROL</p> */}
     </FilteredChemicalElementBox>
   ];
 
@@ -92,7 +110,10 @@ function SmallChemForm({ filteredElements, filterElements }: any) {
 }
 
 function mapStateToProps(state: any) {
-  return { ...state.table };
+  return {
+    table: { ...state.table },
+    panelSizes: { ...state.panelSizes }
+  };
 };
 
 const mapDispatchToProps = {

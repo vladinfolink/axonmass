@@ -1,4 +1,4 @@
-import { SingleAtomRender } from './SingleAtomRender';
+import SingleAtomRender from './SingleAtomRender';
 
 export function ChemicalElement(props: any) {
   const { filteredElement } = props;

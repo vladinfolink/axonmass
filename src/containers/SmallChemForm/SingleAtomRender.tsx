@@ -1,12 +1,13 @@
 import { ForceGraph3D } from 'react-force-graph';
 import { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return { width, height };
 };
 
-export const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells } }: any) => {
+const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells }, panelSizes }: any) => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const fgRef: React.MutableRefObject<any> = useRef();
   const protons = new Array(number).fill(null).map((proton, idx) => {
@@ -26,9 +27,10 @@ export const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shell
       source: 'proton-0', target: electron.id, electronInShell: electron.electronInShell, nrOfElectronsInShell: electron.nrOfElectronsInShell
     }
   });
+  const displayElectrons = false;
   const data = {
-    nodes: [...protons, ...neutrons, ...electrons],
-    links: [...protonLinks, ...neutronLinks, ...electronsLinks]
+    nodes: [...protons, ...neutrons, ...(displayElectrons ? electrons : [])],
+    links: [...protonLinks, ...neutronLinks, ...displayElectrons ? electronsLinks : []]
   };
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shell
   return <>
     <ForceGraph3D
       ref={fgRef}
-      width={windowDimensions.height * 0.18} height={windowDimensions.height * 0.18}
+      width={panelSizes.D.width / 5.2} height={windowDimensions.height * 0.18}
       backgroundColor={'#5A5A5A'} nodeLabel="type" nodeAutoColorBy="type"
       graphData={{ ...data }}
       showNavInfo={false} nodeVal={16} nodeResolution={32} nodeOpacity={1} linkVisibility={false} cooldownTicks={100}
@@ -51,3 +53,16 @@ export const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shell
     />
   </>
 };
+
+function mapStateToProps(state: any) {
+  return {
+    panelSizes: { ...state.panelSizes }
+  };
+};
+
+const mapDispatchToProps = { };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleAtomRender);
