@@ -1,31 +1,36 @@
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { IAtomNameInterface } from '../../types';
 import SingleAtomRender from './SingleAtomRender';
 
-function ChemicalElement({filteredElement, panelSizes: { D : {width}}}: any) {
-  const fontSize = `calc(${width/65}px)`;
+const AtomName = styled.p`
+  font-size: ${(props: IAtomNameInterface) => props.atomNameStyle['font-size']};
+  text-align: ${(props: IAtomNameInterface) => props.atomNameStyle['text-align']};
+  width: ${(props: IAtomNameInterface) => props.atomNameStyle.width};
+  border: ${(props: IAtomNameInterface) => props.atomNameStyle.border};
+`;
+
+function ChemicalElement({ filteredElement, width }: any) {
+  const fontSize = `calc(${width / 65}px)`;
   const style = {
-    fontSize,
-    width: `${width / 5.4}px`,
-    border: '1px solid white',
-    'text-align': 'center'
-  }
-  return (
-    <>
-      <p style={{ ...style }}>{filteredElement.name.toUpperCase()}</p>
-      <SingleAtomRender filteredElement={filteredElement} />
-    </>
-  )
+    'font-size': fontSize, 'text-align': 'center', width: `${width / 5.4}px`, border: '1px solid white'
+  };
+  const atomRender = <>
+    <AtomName atomNameStyle={{ ...style }}>
+      {filteredElement.name.toUpperCase()}
+    </AtomName>
+    <SingleAtomRender filteredElement={filteredElement} />
+  </>
+
+  return atomRender;
 }
 
 function mapStateToProps(state: any) {
   return {
-    panelSizes: { ...state.panelSizes }
+    width: state.panelSizes.D.width
   };
 };
 
-const mapDispatchToProps = { };
+const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChemicalElement);
+export default connect(mapStateToProps, mapDispatchToProps)(ChemicalElement);
