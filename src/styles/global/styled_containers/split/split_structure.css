@@ -1,16 +1,19 @@
 :root {
-  --focus-border: rgba(42, 43, 29, 0.4);;
+  --focus-border: #616161;;
   --separator-border: transparent;
 }
 
 .sash-horizontal::before{
-  border-top: 1px dotted #2e2e2e;
-  border-bottom: 1px dotted #2e2e2e;
+  border-top: 1px solid #3D3D3D;
+  border-bottom: 1px solid #3D3D3D;
 }
 
 .sash-vertical::before{
-  border: 1px dotted #2e2e2e;
-  background: rgba(42, 43, 29, 0.2);
+  border: 1px dotted #3D3D3D;
+  background: #3D3D3D;
 }
 
-/* 585858 */
+.sash-horizontal::before{
+  border: 1px solid #3D3D3D;
+  background: #3D3D3D;
+}

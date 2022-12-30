@@ -5,15 +5,20 @@ import SingleAtomRender from './SingleAtomRender';
 
 const AtomName = styled.p`
   font-size: ${(props: IAtomNameInterface) => props.atomNameStyle['font-size']};
-  text-align: ${(props: IAtomNameInterface) => props.atomNameStyle['text-align']};
   width: ${(props: IAtomNameInterface) => props.atomNameStyle.width};
-  border: ${(props: IAtomNameInterface) => props.atomNameStyle.border};
+  text-align: center;
+  border-left: 8px solid #3D3D3D;
+  border-right: 8px solid #3D3D3D;
+  border-top: 2px solid #3D3D3D;
+  border-bottom: 2px solid #3D3D3D;
+  color: #000;
+  border-color: #3D3D3D;
 `;
 
 function ChemicalElement({ filteredElement, width }: any) {
   const fontSize = `calc(${width / 65}px)`;
   const style = {
-    'font-size': fontSize, 'text-align': 'center', width: `${width / 5.4}px`, border: '1px solid white'
+    'font-size': fontSize, width: `${width / 5.4}px`,
   };
   const atomRender = <>
     <AtomName atomNameStyle={{ ...style }}>
