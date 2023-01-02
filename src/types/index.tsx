@@ -10,4 +10,3 @@ export interface IPanelValue {
 }
 
 export interface IAtomNameInterface { atomNameStyle: { [key: string]: string; } };
-

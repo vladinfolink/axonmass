@@ -24,8 +24,11 @@ export const registerPanelSize = (panelId: string, value: number) => async (disp
 };
 
 export const transferCompiledMolecule = (filteredElement: any) => async (dispatch: any) => {
-  console.log(filteredElement);
-  dispatch({ type: 'TRANSFER_TO_COMPILED_MOLECULE', payload: filteredElement.data });
+
+  dispatch({
+    type: 'TRANSFER_TO_COMPILED_MOLECULE',
+    payload:  {...appendElementData(filteredElement).data}
+  });
 };
 
 // export const fetchMoleculeDeepStructure = (id: string) => async (dispatch: any) => {

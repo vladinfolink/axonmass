@@ -10,8 +10,14 @@ export default (compiledMolecule = {
       return {
         ...compiledMolecule,
         data: {
-          ...compiledMolecule.data,
-          ...action.payload
+          nodes: [
+            ...compiledMolecule.data.nodes,
+            ...action.payload.nodes
+          ],
+          links: [
+            ...compiledMolecule.data.links,
+            ...action.payload.links
+          ],
         }
       };
     default:

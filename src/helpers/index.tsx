@@ -8,13 +8,14 @@ export const calculateHeightAsNumber = (percent: number, total: number): number 
 
 export function appendElementData(el: any) {
   const { name, number, atomic_mass, shells } = el;
+  const uniqueId = `${name.toLowerCase()}-${uuid()}`;
 
   const protons = new Array(number).fill(null).map((proton, idx) => {
-    return { id: `proton-${idx}`, type: 'proton', color: '#E43A43' }
+    return { id: `${uniqueId}-proton-${idx}`, type: 'proton', color: '#E43A43' }
   });
-  const protonLinks = protons.map((p, idx) => { return { source: 'proton-0', target: p.id } });
-  const neutrons = new Array(Math.floor(atomic_mass - number)).fill(null).map((neutron, idx) => { return { id: `neutron-${idx}`, type: 'neutron', color: '#1B703D' } });
-  const neutronLinks = neutrons.map((l, idx) => { return { source: 'proton-0', target: l.id } });
+  const protonLinks = protons.map((p, idx) => { return { source: `${uniqueId}-proton-0`, target: p.id } });
+  const neutrons = new Array(Math.floor(atomic_mass - number)).fill(null).map((neutron, idx) => { return { id: `${uniqueId}-neutron-${idx}`, type: 'neutron', color: '#1B703D' } });
+  const neutronLinks = neutrons.map((l, idx) => { return { source: `${uniqueId}-proton-0`, target: l.id } });
   const electrons = shells.reduce((ini: any, shell: any, idx: number) => {
     const electronsForShell = new Array(shell).fill(null).map((electron) => { return { type: 'electron', color: 'blue', electronInShell: idx + 1, nrOfElectronsInShell: shell }; });
     return [...ini, ...electronsForShell];
@@ -23,7 +24,7 @@ export function appendElementData(el: any) {
   });
   const electronsLinks = electrons.map((electron: any) => {
     return {
-      source: 'proton-0', target: electron.id, electronInShell: electron.electronInShell, nrOfElectronsInShell: electron.nrOfElectronsInShell
+      source:  `${uniqueId}-proton-0`, target: electron.id, electronInShell: electron.electronInShell, nrOfElectronsInShell: electron.nrOfElectronsInShell
     }
   });
   const displayElectrons = false;
@@ -32,7 +33,6 @@ export function appendElementData(el: any) {
     links: [...neutronLinks, ...protonLinks, ...displayElectrons ? electronsLinks : []]
   };
 
-  const uniqueId = `${name}-${uuid()}`
 
   return {
     ...el,

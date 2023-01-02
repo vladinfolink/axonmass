@@ -31,7 +31,7 @@ function ChemicalElement({ filteredElement, width, transferCompiledMolecule }: a
       {filteredElement.name.toUpperCase()}
     </AtomName>
     <SingleAtomRender
-      filteredElement={filteredElement}
+      filteredElement={{...filteredElement}}
     />
   </>;
 
