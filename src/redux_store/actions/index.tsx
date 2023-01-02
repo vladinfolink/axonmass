@@ -1,29 +1,12 @@
 import { periodicTable } from "../periodic_table";
-import { v4 as uuid } from 'uuid';
-
+import { appendElementData } from "../../helpers";
 
 type periodicElementType = typeof periodicTable.elements[0]
 
-// export const fetchPostsAndUsers = () => async (dispatch, getState) => {
-//   await dispatch(fetchPosts());
-
-//   _.chain(getState().posts)
-//     .map('userId')
-//     .uniq()
-//     .forEach(id => dispatch(fetchUser(id)))
-//     .value();
-// };
-
 export const filterElements = (value: string) => async (dispatch: (arg0: { type: string; filteredElements: any; }) => void) => {
-  const filteredElements = !!value ? periodicTable.elements.filter((element: periodicElementType) => element.name.toLowerCase().startsWith(value.toLowerCase())) : [];
+  const filteredElements = !!value ? periodicTable.elements.filter((element: periodicElementType) => element.name.toLowerCase().startsWith(value.toLowerCase())).map(appendElementData) : [];
 
   dispatch({ type: 'FILTER_ELEMENTS', filteredElements });
-};
-
-export const fetchMoleculeDeepStructure = (id: string) => async (dispatch: any) => {
-  // const response = await lb.get(`/mls/${id}`);
-
-  // dispatch({ type: 'FETCH_MOLECULES', payload: response.data });
 };
 
 export const registerPanelSize = (panelId: string, value: number) => async (dispatch: any) => {
@@ -40,7 +23,18 @@ export const registerPanelSize = (panelId: string, value: number) => async (disp
   dispatch({ type: dimentionScopes[panelId], panelId, value });
 };
 
-export const registerAtomData = ({name, data}: any) => async (dispatch: any, getState: any) => {
-  const elementUniqueId = name.toLowerCase() + '-' + uuid();
+// export const fetchMoleculeDeepStructure = (id: string) => async (dispatch: any) => {
+// const response = await lb.get(`/mls/${id}`);
 
-};
+// dispatch({ type: 'FETCH_MOLECULES', payload: response.data });
+// };
+
+// export const fetchPostsAndUsers = () => async (dispatch, getState) => {
+//   await dispatch(fetchPosts());
+
+//   _.chain(getState().posts)
+//     .map('userId')
+//     .uniq()
+//     .forEach(id => dispatch(fetchUser(id)))
+//     .value();
+// };

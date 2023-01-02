@@ -9,3 +9,11 @@ export const combinedReducers = combineReducers({
   panelSizes: panelSizesReducer
 });
 
+// ----------REDUX STORE TYPE:
+type CombinedType = ReturnType<typeof combinedReducers>;
+
+type R0 = Omit<CombinedType, 'table' | 'molecules' | 'panelSizes'>;  
+
+export type ReduxStoreType = R0 & {table: any, molecules: any, panelSizes: any };
+// ----------REDUX STORE TYPE^
+

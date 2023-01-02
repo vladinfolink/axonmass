@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ChemicalElement  from './ChemicalElement';
 import { filterElements } from '../../redux_store/actions';
-import { ReduxStoreType } from '../../types';
 import { ChemSearchInputContainer, FilteredChemicalElementBox, ChemElementCollection } from '../../view';
+import { ReduxStoreType } from '../../redux_store/reducers';
 
 function SmallChemForm({ table: { filteredElements }, filterElements, panelSizes }: any) {
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -11,7 +11,7 @@ function SmallChemForm({ table: { filteredElements }, filterElements, panelSizes
     e.stopPropagation();
     const { target: { value } } = e;
     filterElements(value);
-  }
+  };
 
   const chemicalElementSearch = <ChemSearchInputContainer
     D={panelSizes.D}
@@ -60,6 +60,4 @@ function mapStateToProps(state: ReduxStoreType) {
   };
 };
 
-const mapDispatchToProps = { filterElements };
-
-export default connect( mapStateToProps, mapDispatchToProps )(SmallChemForm);
+export default connect( mapStateToProps, { filterElements } )(SmallChemForm);

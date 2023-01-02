@@ -11,8 +11,6 @@ type Props = { registerPanelSize?: any; }
 
 function SplitStructure({ registerPanelSize }: Props) {
   const changeHandler = (sizes: number[], panelId: string) => {
-    console.log(panelId, sizes);
-
     const panels: {
       [key: string]: any;
     } = {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { calculateHeight } from '../helpers';
+import { calculateHeightAsString } from '../helpers';
 import { FilteredChemicalElementBoxPropsType } from '../types';
 
 export const CommonFlexStyle = styled.div`
@@ -11,7 +11,7 @@ export const CommonFlexStyle = styled.div`
 export const ChemSearchInputContainer = styled.div`
   flex-basis: 90%;
   display: flex;
-  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeight(14, props.D.height)};
+  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeightAsString(14, props.D.height)};
 
   input {
     font-size: 22px;
@@ -34,7 +34,7 @@ export const FilteredChemicalElementBox = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeight(70, props.D.height)};
+  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeightAsString(70, props.D.height)};
   justify-content: space-evenly;
   background-color: #7E7E7E;
 `;

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { IAtomNameInterface } from '../../types';
 import SingleAtomRender from './SingleAtomRender';
 
-
 const AtomName = styled.p`
   font-size: ${(props: IAtomNameInterface) => props.atomNameStyle['font-size']};
   width: ${(props: IAtomNameInterface) => props.atomNameStyle.width};
@@ -23,7 +22,6 @@ function ChemicalElement({ filteredElement, width }: any) {
     'font-size': fontSize, width: `${width / 5.4}px`,
   };
 
-
   const atomRender = <>
     <AtomName atomNameStyle={{ ...style }}>
       {filteredElement.name.toUpperCase()}
@@ -32,7 +30,6 @@ function ChemicalElement({ filteredElement, width }: any) {
       filteredElement={filteredElement}
     />
   </>;
-
 
   return atomRender;
 }
@@ -43,6 +40,4 @@ function mapStateToProps(state: any) {
   };
 };
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChemicalElement);
+export default connect(mapStateToProps, {})(ChemicalElement);
