@@ -1,7 +1,9 @@
+
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { IAtomNameInterface } from '../../types';
 import SingleAtomRender from './SingleAtomRender';
+
 
 const AtomName = styled.p`
   font-size: ${(props: IAtomNameInterface) => props.atomNameStyle['font-size']};
@@ -20,12 +22,17 @@ function ChemicalElement({ filteredElement, width }: any) {
   const style = {
     'font-size': fontSize, width: `${width / 5.4}px`,
   };
+
+
   const atomRender = <>
     <AtomName atomNameStyle={{ ...style }}>
       {filteredElement.name.toUpperCase()}
     </AtomName>
-    <SingleAtomRender filteredElement={filteredElement} />
-  </>
+    <SingleAtomRender
+      filteredElement={filteredElement}
+    />
+  </>;
+
 
   return atomRender;
 }

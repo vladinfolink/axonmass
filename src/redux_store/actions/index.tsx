@@ -1,4 +1,6 @@
 import { periodicTable } from "../periodic_table";
+import { v4 as uuid } from 'uuid';
+
 
 type periodicElementType = typeof periodicTable.elements[0]
 
@@ -36,4 +38,9 @@ export const registerPanelSize = (panelId: string, value: number) => async (disp
     HEIGHT_E: 'REGISTER_PANEL_HEIGHT_E',
   }
   dispatch({ type: dimentionScopes[panelId], panelId, value });
+};
+
+export const registerAtomData = ({name, data}: any) => async (dispatch: any, getState: any) => {
+  const elementUniqueId = name.toLowerCase() + '-' + uuid();
+
 };

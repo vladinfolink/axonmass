@@ -2,10 +2,13 @@ import { ForceGraph3D } from 'react-force-graph';
 import { useEffect, useRef } from 'react';
 
 import { connect } from 'react-redux';
+import { registerAtomData } from '../../redux_store/actions';
 
 const calculateHeight = (percent: number, total: number) => percent / 100 * total;
 
-const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells }, panelSizes }: any) => {
+const SingleAtomRender = ({
+  filteredElement: { atomic_mass, number, shells, name }, panelSizes
+}: any) => {
   const fgRef: React.MutableRefObject<any> = useRef();
   const protons = new Array(number).fill(null).map((proton, idx) => {
     return { id: `proton-${idx}`, type: 'proton', color: '#E43A43' }
@@ -32,8 +35,10 @@ const SingleAtomRender = ({ filteredElement: { atomic_mass, number, shells }, pa
 
   useEffect(() => {
     fgRef?.current.d3Force('link').distance((link: any) => {
-      return link.target.type === 'electron' ? link.electronInShell * 88 : 11
+      return link.target.type === 'electron' ? link.electronInShell * 88 : 11;
     });
+
+    registerAtomData({name, data})
   }, []);
 
   return <>
@@ -55,6 +60,8 @@ function mapStateToProps(state: any) {
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  registerAtomData
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleAtomRender);
