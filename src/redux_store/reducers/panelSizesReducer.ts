@@ -3,8 +3,8 @@
 import { IPanelValue } from "../../types";
 
 const defaultPanelValues = {
-  width: 1,
-  height: 1
+  width: 1000,
+  height: 1000
 };
 
 export default (s: {
