@@ -2,7 +2,7 @@ import { ForceGraph3D } from 'react-force-graph';
 import { useEffect, useRef } from 'react';
 
 import { connect } from 'react-redux';
-import { calculateHeightAsNumber } from '../../helpers';
+import { calculateHeightAsNumber, generateElementData } from '../../helpers';
 
 const SingleAtomRender = ({
   filteredElement, panelSizes
@@ -21,7 +21,7 @@ const SingleAtomRender = ({
       width={panelSizes.D.width / 5.1}
       height={calculateHeightAsNumber(45, panelSizes.D.height)}
       backgroundColor={'#7E7E7E'} nodeLabel="type" nodeAutoColorBy="type"
-      graphData={{ ...filteredElement.data }}
+      graphData={{...generateElementData(filteredElement)}}
       showNavInfo={false} nodeVal={16} nodeResolution={32} nodeOpacity={1} linkVisibility={false} cooldownTicks={40}
       onEngineStop={() => (fgRef as any)?.current?.zoomToFit(400)}
     />

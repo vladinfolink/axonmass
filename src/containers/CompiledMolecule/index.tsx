@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { ForceGraph3D } from 'react-force-graph';
 import { connect } from 'react-redux';
+import { generateElementData } from '../../helpers';
 
-const SingleAtomRender = ({width, height, data}: any) => {
+const SingleAtomRender = ({width, height, elementsInChart}: any) => {
   const fgRef: React.MutableRefObject<any> = useRef();
 
   useEffect(() => {
@@ -11,13 +12,27 @@ const SingleAtomRender = ({width, height, data}: any) => {
     });
   }, []);
 
+  const data = elementsInChart.reduce((ini: { nodes: any; links: any; }, el: any) => {
+    const {nodes, links} = generateElementData(el);
+    
+    return {
+      ...ini,
+      nodes: [...ini.nodes, ...nodes],
+      links: [...ini.links, ...links],
+    }
+
+  }, { nodes: [], links: [] });
+
+  console.log(data);
+  
+
 return <>
     <ForceGraph3D
       ref={fgRef}
       width={width}
       height={height}
       backgroundColor={'#7E7E7E'} nodeLabel="type" nodeAutoColorBy="type"
-      graphData={{ ...data }}
+      graphData={data}
       showNavInfo={true}
       nodeVal={16}
       nodeResolution={16}
@@ -35,7 +50,7 @@ function mapStateToProps(state: any) {
   return {
     width: state.panelSizes.E.width,
     height: state.panelSizes.E.height ,
-    data: {...state.compiledMolecule.data}
+    elementsInChart: [...state.compiledMolecule.elementsInChart]
   };
 };
 

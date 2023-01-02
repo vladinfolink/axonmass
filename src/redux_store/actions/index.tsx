@@ -1,10 +1,9 @@
 import { periodicTable } from "../periodic_table";
-import { appendElementData } from "../../helpers";
 
 type periodicElementType = typeof periodicTable.elements[0]
 
 export const filterElements = (value: string) => async (dispatch: (arg0: { type: string; filteredElements: any; }) => void) => {
-  const filteredElements = !!value ? periodicTable.elements.filter((element: periodicElementType) => element.name.toLowerCase().startsWith(value.toLowerCase())).map(appendElementData) : [];
+  const filteredElements = !!value ? periodicTable.elements.filter((element: periodicElementType) => element.name.toLowerCase().startsWith(value.toLowerCase())) : [];
 
   dispatch({ type: 'FILTER_ELEMENTS', filteredElements });
 };
@@ -27,7 +26,7 @@ export const transferCompiledMolecule = (filteredElement: any) => async (dispatc
 
   dispatch({
     type: 'TRANSFER_TO_COMPILED_MOLECULE',
-    payload:  {...appendElementData(filteredElement).data}
+    payload: {...filteredElement}
   });
 };
 

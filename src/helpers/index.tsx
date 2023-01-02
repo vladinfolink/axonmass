@@ -6,7 +6,10 @@ export const calculateWidthAsString = (percent: number, total: number): string =
 
 export const calculateHeightAsNumber = (percent: number, total: number): number => percent / 100 * total;
 
-export function appendElementData(el: any) {
+export function generateElementData(el: any): {
+  nodes: any[];
+  links: any[];
+} {
   const { name, number, atomic_mass, shells } = el;
   const uniqueId = `${name.toLowerCase()}-${uuid()}`;
 
@@ -33,10 +36,5 @@ export function appendElementData(el: any) {
     links: [...neutronLinks, ...protonLinks, ...displayElectrons ? electronsLinks : []]
   };
 
-
-  return {
-    ...el,
-    data,
-    uniqueId
-  }
+  return { ...data }
 }
