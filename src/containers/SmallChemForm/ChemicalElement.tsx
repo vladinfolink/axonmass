@@ -1,6 +1,7 @@
 
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { transferCompiledMolecule } from '../../redux_store/actions';
 import { IAtomNameInterface } from '../../types';
 import SingleAtomRender from './SingleAtomRender';
 
@@ -16,14 +17,17 @@ const AtomName = styled.p`
   border-color: #3D3D3D;
 `;
 
-function ChemicalElement({ filteredElement, width }: any) {
+function ChemicalElement({ filteredElement, width, transferCompiledMolecule }: any) {
   const fontSize = `calc(${width / 65}px)`;
   const style = {
     'font-size': fontSize, width: `${width / 5.4}px`,
   };
 
   const atomRender = <>
-    <AtomName atomNameStyle={{ ...style }}>
+    <AtomName
+      atomNameStyle={{ ...style }}
+      onClick={() => transferCompiledMolecule(filteredElement)}
+    >
       {filteredElement.name.toUpperCase()}
     </AtomName>
     <SingleAtomRender
@@ -40,4 +44,4 @@ function mapStateToProps(state: any) {
   };
 };
 
-export default connect(mapStateToProps, {})(ChemicalElement);
+export default connect(mapStateToProps, { transferCompiledMolecule })(ChemicalElement);

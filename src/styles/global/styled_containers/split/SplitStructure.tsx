@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Allotment } from "allotment";
 import SmallChemForm from '../../../../containers/SmallChemForm';
@@ -6,6 +6,7 @@ import debounce from 'lodash/debounce';
 import "allotment/dist/style.css";
 import './split_structure.css';
 import { registerPanelSize } from '../../../../redux_store/actions';
+import CompiledMolecule from '../../../../containers/CompiledMolecule';
 
 type Props = { registerPanelSize?: any; }
 
@@ -26,10 +27,10 @@ function SplitStructure({ registerPanelSize }: Props) {
       'HEIGHTS': () => {
         registerPanelSize('HEIGHTS_A_B_C', sizes[0]);
         registerPanelSize('HEIGHT_D', sizes[1]);
-        registerPanelSize('HEIGHT_E', sizes[0] +  sizes[1]);
+        registerPanelSize('HEIGHT_E', sizes[0] + sizes[1]);
       }
     };
-      panels[panelId]();
+    panels[panelId]();
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,28 +40,31 @@ function SplitStructure({ registerPanelSize }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedChangeHandler_X_Y = useMemo(() => debounce(changeHandler, 600), []);
 
-  const A_B_C = 
-    <Allotment  onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
+  const A_B_C =
+    <Allotment onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
 
       <Allotment.Pane > {/* A */}A </Allotment.Pane>
       <Allotment.Pane> {/* B */}B </Allotment.Pane>
       <Allotment.Pane> {/* C */}C </Allotment.Pane>
 
     </Allotment>
-// -----------------
+  // -----------------
   const D_group = <Allotment> {/* D */} <SmallChemForm /> </Allotment>
 
   return (
     <>
       <Allotment onChange={(sizes) => debouncedChangeHandler_D_E(sizes, 'D_E')}>
-        
+
         <Allotment onChange={(sizes) => debouncedChangeHandler_X_Y(sizes, 'HEIGHTS')} vertical>
           {A_B_C}
           {D_group}
         </Allotment>
 
         <Allotment minSize={400}>
-          <Allotment.Pane minSize={400}> {/* E */}E </Allotment.Pane>
+          <Allotment.Pane minSize={400}>
+            <CompiledMolecule />
+            {/* E */}
+          </Allotment.Pane>
         </Allotment>
 
       </Allotment>

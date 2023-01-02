@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import compiledMoleculeReducer from './compiledMoleculeReducer';
 import elementsReducer from './elementsReducer';
 import moleculesReducer from './moleculesReducer';
 import panelSizesReducer from './panelSizesReducer';
@@ -6,7 +7,8 @@ import panelSizesReducer from './panelSizesReducer';
 export const combinedReducers = combineReducers({
   table: elementsReducer,
   molecules: moleculesReducer,
-  panelSizes: panelSizesReducer
+  panelSizes: panelSizesReducer,
+  compiledMolecule: compiledMoleculeReducer
 });
 
 // ----------REDUX STORE TYPE:

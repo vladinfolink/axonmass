@@ -23,6 +23,11 @@ export const registerPanelSize = (panelId: string, value: number) => async (disp
   dispatch({ type: dimentionScopes[panelId], panelId, value });
 };
 
+export const transferCompiledMolecule = (filteredElement: any) => async (dispatch: any) => {
+  console.log(filteredElement);
+  dispatch({ type: 'TRANSFER_TO_COMPILED_MOLECULE', payload: filteredElement.data });
+};
+
 // export const fetchMoleculeDeepStructure = (id: string) => async (dispatch: any) => {
 // const response = await lb.get(`/mls/${id}`);
 
