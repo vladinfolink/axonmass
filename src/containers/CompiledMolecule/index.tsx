@@ -7,12 +7,13 @@ const SingleAtomRender = ({width, height, elementsInChart}: any) => {
   const fgRef: React.MutableRefObject<any> = useRef();
 
   useEffect(() => {
-    fgRef?.current.d3Force('link').distance((link: any) => {
-      return link.target.type === 'electron' ? link.electronInShell * 88 : 11;
+    !!elementsInChart.length && fgRef?.current.d3Force('link').distance((link: any) => {
+      return link.target.type === 'electron' ? link.electronInShell * 88 : 4;
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const data = elementsInChart.reduce((ini: { nodes: any; links: any; }, el: any) => {
+  const data = !!elementsInChart.length && elementsInChart.reduce((ini: { nodes: any; links: any; }, el: any) => {
     const {nodes, links} = generateElementData(el);
     
     return {
@@ -27,7 +28,7 @@ const SingleAtomRender = ({width, height, elementsInChart}: any) => {
   
 
 return <>
-    <ForceGraph3D
+    {!!elementsInChart.length && <ForceGraph3D
       ref={fgRef}
       width={width}
       height={height}
@@ -35,14 +36,14 @@ return <>
       graphData={data}
       showNavInfo={true}
       nodeVal={16}
-      nodeResolution={16}
+      nodeResolution={32}
       nodeOpacity={1}
       linkVisibility={false}
       cooldownTicks={40}
-      // onEngineStop={() => (fgRef as any)?.current?.zoomToFit(400)}
+      onEngineStop={() => (fgRef as any)?.current?.zoomToFit(400)}
       enableNavigationControls
       forceEngine={'d3'}
-    />
+    />}
   </>
 };
 

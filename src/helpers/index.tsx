@@ -14,10 +14,10 @@ export function generateElementData(el: any): {
   const uniqueId = `${name.toLowerCase()}-${uuid()}`;
 
   const protons = new Array(number).fill(null).map((proton, idx) => {
-    return { id: `${uniqueId}-proton-${idx}`, type: 'proton', color: '#E43A43' }
+    return { id: `${uniqueId}-proton-${idx}`, type: 'proton', color: '#333333' }
   });
   const protonLinks = protons.map((p, idx) => { return { source: `${uniqueId}-proton-0`, target: p.id } });
-  const neutrons = new Array(Math.floor(atomic_mass - number)).fill(null).map((neutron, idx) => { return { id: `${uniqueId}-neutron-${idx}`, type: 'neutron', color: '#1B703D' } });
+  const neutrons = new Array(Math.floor(atomic_mass - number)).fill(null).map((neutron, idx) => { return { id: `${uniqueId}-neutron-${idx}`, type: 'neutron', color: '#777777' } });
   const neutronLinks = neutrons.map((l, idx) => { return { source: `${uniqueId}-proton-0`, target: l.id } });
   const electrons = shells.reduce((ini: any, shell: any, idx: number) => {
     const electronsForShell = new Array(shell).fill(null).map((electron) => { return { type: 'electron', color: 'blue', electronInShell: idx + 1, nrOfElectronsInShell: shell }; });
