@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { transferCompiledMolecule } from '../../redux_store/actions';
 import { IAtomNameInterface } from '../../types';
 import SingleAtomRender from './SingleAtomRender';
+import SingleTableAtomRender from './SingleTableAtomRender';
 
 const AtomName = styled.p`
   font-size: ${(props: IAtomNameInterface) => props.atomNameStyle['font-size']};
@@ -28,11 +29,12 @@ function ChemicalElement({ filteredElement, width, transferCompiledMolecule }: a
       atomNameStyle={{ ...style }}
       onClick={() => transferCompiledMolecule(filteredElement)}
     >
-      {filteredElement.name.toUpperCase()}
+      render control icons
     </AtomName>
-    <SingleAtomRender
+    {/* <SingleAtomRender
       filteredElement={{...filteredElement}}
-    />
+    /> */}
+    <SingleTableAtomRender filteredElement={{...filteredElement}} />
   </>;
 
   return atomRender;

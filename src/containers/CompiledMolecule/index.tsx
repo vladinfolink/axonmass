@@ -24,9 +24,6 @@ const SingleAtomRender = ({width, height, elementsInChart}: any) => {
 
   }, { nodes: [], links: [] });
 
-  console.log(data);
-  
-
 return <>
     {!!elementsInChart.length && <ForceGraph3D
       ref={fgRef}
