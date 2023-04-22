@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import "allotment/dist/style.css";
 import './split_structure.css';
 import { registerPanelSize } from '../../../../redux_store/actions';
-import CompiledMolecule from '../../../../containers/CompiledMolecule';
+import { compiledSelectedView } from '../../../../containers/CompiledMolecule';
 
 type Props = { registerPanelSize?: any; }
 
@@ -62,7 +62,7 @@ function SplitStructure({ registerPanelSize }: Props) {
 
         <Allotment minSize={400}>
           <Allotment.Pane minSize={400}>
-            <CompiledMolecule />
+            {compiledSelectedView}
             {/* E */}
           </Allotment.Pane>
         </Allotment>

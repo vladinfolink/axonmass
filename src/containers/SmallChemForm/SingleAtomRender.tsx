@@ -34,4 +34,4 @@ function mapStateToProps(state: any) {
   };
 };
 
-export default connect(mapStateToProps, {})(SingleAtomRender);
+export default connect(mapStateToProps, {})(SingleAtomRender)

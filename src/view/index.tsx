@@ -34,7 +34,7 @@ export const FilteredChemicalElementBox = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeightAsString(70, props.D.height)};
+  height: ${(props: FilteredChemicalElementBoxPropsType) => calculateHeightAsString(100, props.D.height)};
   justify-content: space-evenly;
   background-color: #7E7E7E;
 `;
