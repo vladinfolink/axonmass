@@ -1,12 +1,10 @@
-import { ThemedStyledProps } from "styled-components";
 
-export type FilteredChemicalElementBoxPropsType = ThemedStyledProps<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-  D: { width: number, height: number }
-}, any>;
-
-export interface IPanelValue {
-  height: number,
-  width: number
+export interface IProductInterface {
+  id: number;
+  name: string;
+  imageUrl: string;
+  supplierId: number;
+  wholesalePrice: number;
+  price: number;
+  categories: string[]
 }
-
-export interface IAtomNameInterface { atomNameStyle: { [key: string]: string; } };

@@ -1,11 +1,13 @@
 /* eslint-disable import/no-anonymous-default-export */
-
-import { IPanelValue } from "../../types";
-
 const defaultPanelValues = {
   width: 1000,
   height: 1000
 };
+
+ interface IPanelValue {
+  height: number,
+  width: number
+}
 
 export default (s: {
   [key: string]: IPanelValue

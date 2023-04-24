@@ -1,12 +1,5 @@
-import { periodicTable } from "../periodic_table";
-
-type periodicElementType = typeof periodicTable.elements[0]
-
-export const filterElements = (value: string) => async (dispatch: (arg0: { type: string; filteredElements: any; }) => void) => {
-  const filteredElements = !!value ? periodicTable.elements.filter((element: periodicElementType) => element.name.toLowerCase().startsWith(value.toLowerCase())) : [];
-
-  dispatch({ type: 'FILTER_ELEMENTS', filteredElements });
-};
+import axios from "axios";
+import { IProductInterface } from "../../types";
 
 export const registerPanelSize = (panelId: string, value: number) => async (dispatch: any) => {
   const dimentionScopes: { [key: string]: string } = {
@@ -22,26 +15,101 @@ export const registerPanelSize = (panelId: string, value: number) => async (disp
   dispatch({ type: dimentionScopes[panelId], panelId, value });
 };
 
-export const transferCompiledMolecule = (filteredElement: any) => async (dispatch: any) => {
+export const fetchProducts = (panelId: string, value: number) => async (dispatch: any) => {
+  // axios.get("https://man-shopping-cart-test.azurewebsites.net/api/Products");
+
+
+  const allProducts: Promise<IProductInterface[]> = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(
+        [
+          {
+            "id": 1,
+            "name": "USB Cable",
+            "imageUrl": "https://images.unsplash.com/photo-1492107376256-4026437926cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80",
+            "supplierId": 1,
+            "wholesalePrice": 2,
+            "price": 4,
+            "categories": [
+              "accessory"
+            ]
+          },
+          {
+            "id": 2,
+            "name": "Laptop",
+            "imageUrl": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80",
+            "supplierId": 2,
+            "wholesalePrice": 800,
+            "price": 1000,
+            "categories": [
+              "electronic"
+            ]
+          },
+          {
+            "id": 3,
+            "name": "Monitor",
+            "imageUrl": "https://images.unsplash.com/photo-1546538915-a9e2c8d0a0b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80",
+            "supplierId": 1,
+            "wholesalePrice": 180,
+            "price": 220,
+            "categories": [
+              "electronic"
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Headphones",
+            "imageUrl": "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80",
+            "supplierId": 1,
+            "wholesalePrice": 20,
+            "price": 30,
+            "categories": [
+              "accessory",
+              "electronic",
+              "audio"
+            ]
+          }
+        ]
+      )
+    }, 2000)
+  });
+
+  try {
+    const products: IProductInterface[] = await allProducts;
+    dispatch({ type: 'FETCH_PRODUCTS', payload: [...products] });
+  } catch (error) { console.error('ERROR: ', error) }
+};
+
+export const calculateCost = () => (dispatch: any, getState: any) => {
+  console.log({ state: getState() });
+
+  axios.post('https://man-shopping-cart-test.azurewebsites.net/api/Cart/CalculateCost',
+
+    {
+      items: [
+        {
+          productId: 1,
+          unitQuantity: 2
+        }
+      ],
+      couponCode: 'freeShipping!'
+    }
+  )
+}
+
+
+export const transferProductToCart = (filteredElement: any) => async (dispatch: any) => {
 
   dispatch({
-    type: 'TRANSFER_TO_COMPILED_MOLECULE',
-    payload: {...filteredElement}
+    type: 'TRANSFER_PRODUCT_TO_CART',
+    payload: 'asd'
   });
 };
 
-// export const fetchMoleculeDeepStructure = (id: string) => async (dispatch: any) => {
-// const response = await lb.get(`/mls/${id}`);
+export const removeProductFromCart = (filteredElement: any) => async (dispatch: any) => {
 
-// dispatch({ type: 'FETCH_MOLECULES', payload: response.data });
-// };
-
-// export const fetchPostsAndUsers = () => async (dispatch, getState) => {
-//   await dispatch(fetchPosts());
-
-//   _.chain(getState().posts)
-//     .map('userId')
-//     .uniq()
-//     .forEach(id => dispatch(fetchUser(id)))
-//     .value();
-// };
+  dispatch({
+    type: 'TRANSFER_PRODUCT_TO_CART',
+    payload: 'asd'
+  });
+};

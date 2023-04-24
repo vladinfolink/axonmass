@@ -1,16 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Allotment } from "allotment";
-import SmallChemForm from '../../../../containers/SmallChemForm';
 import debounce from 'lodash/debounce';
 import "allotment/dist/style.css";
 import './split_structure.css';
-import { registerPanelSize } from '../../../../redux_store/actions';
-import { compiledSelectedView } from '../../../../containers/CompiledMolecule';
+import { fetchProducts, registerPanelSize } from '../../../../redux_store/actions';
 
-type Props = { registerPanelSize?: any; }
+type SplitStructureProps = { registerPanelSize?: any; fetchProducts?: any}
 
-function SplitStructure({ registerPanelSize }: Props) {
+function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProps) {
   const changeHandler = (sizes: number[], panelId: string) => {
     const panels: {
       [key: string]: any;
@@ -40,30 +38,36 @@ function SplitStructure({ registerPanelSize }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedChangeHandler_X_Y = useMemo(() => debounce(changeHandler, 600), []);
 
-  const A_B_C =
-    <Allotment onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
-
-      <Allotment.Pane > {/* A */}A </Allotment.Pane>
-      <Allotment.Pane> {/* B */}B </Allotment.Pane>
-      <Allotment.Pane> {/* C */}C </Allotment.Pane>
-
-    </Allotment>
   // -----------------
-  const D_group = <Allotment> {/* D */} <SmallChemForm /> </Allotment>
+    useEffect(() => {
+      fetchProducts();
+    }, [])
+    
+  //------------------
 
   return (
     <>
       <Allotment onChange={(sizes) => debouncedChangeHandler_D_E(sizes, 'D_E')}>
 
         <Allotment onChange={(sizes) => debouncedChangeHandler_X_Y(sizes, 'HEIGHTS')} vertical>
-          {A_B_C}
-          {D_group}
+          <Allotment onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
+
+            <Allotment.Pane > {/* A */}A </Allotment.Pane>
+            <Allotment.Pane> {/* B */}B </Allotment.Pane>
+            <Allotment.Pane> {/* C */}C </Allotment.Pane>
+
+          </Allotment>
+          <Allotment> 
+            <div>
+              asdasdassdassdasd
+            </div>
+          </Allotment>
         </Allotment>
 
         <Allotment minSize={400}>
           <Allotment.Pane minSize={400}>
-            {compiledSelectedView}
-            {/* E */}
+            {'compiled Products'}
+            E
           </Allotment.Pane>
         </Allotment>
 
@@ -77,7 +81,8 @@ function mapStateToProps(state: any): any {
 };
 
 const mapDispatchToProps: any = {
-  registerPanelSize
+  registerPanelSize,
+  fetchProducts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplitStructure)

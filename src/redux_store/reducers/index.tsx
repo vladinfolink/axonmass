@@ -1,19 +1,41 @@
 import { combineReducers } from 'redux';
-import compiledMoleculeReducer from './compiledMoleculeReducer';
-import elementsReducer from './elementsReducer';
+import { cartReducer, productsReducer } from './compiledReducer';
 import panelSizesReducer from './panelSizesReducer';
 
 export const combinedReducers = combineReducers({
-  table: elementsReducer,
   panelSizes: panelSizesReducer,
-  compiledMolecule: compiledMoleculeReducer
+  products: productsReducer,
+  cart: cartReducer
 });
 
-// ----------REDUX STORE TYPE:
-type CombinedType = ReturnType<typeof combinedReducers>;
+/**
+ 
+  Cart{
+items	[...]
+couponCode	string
+}
 
-type R0 = Omit<CombinedType, 'table' | 'panelSizes'>;  
+CartItem{
+productId	integer($int32)
+unitQuantity	integer($int32)
+}
 
-export type ReduxStoreType = R0 & {table: any, molecules: any, panelSizes: any };
-// ----------REDUX STORE TYPE^
+CartCalculationResult{
+itemsCost	number($double)
+shippingCost	number($double)
+discount	number($double)
+finalCost	number($double)
+readOnly: true
+}
 
+Product{
+id	integer($int32)
+name	string
+imageUrl	string
+supplierId	integer($int32)
+wholesalePrice	number($double)
+price	number($double)
+categories	[...]
+}
+
+ */
