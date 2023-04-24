@@ -42,7 +42,6 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
     useEffect(() => {
       fetchProducts();
     }, [])
-    
   //------------------
 
   return (

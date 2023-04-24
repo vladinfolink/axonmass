@@ -58,3 +58,14 @@ export const productsReducer = (products: IProductInterface[] = [], action: { ty
       return [...products];
   }
 };
+
+export const categoriesReducer = (categories: string[] = [], action: { type: string; payload: string[]; }) => {
+  switch (action.type) {
+
+    case 'FETCH_CATEGORIES':
+      return [...action.payload];
+
+    default:
+      return [...categories];
+  }
+};

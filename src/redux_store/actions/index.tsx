@@ -76,7 +76,15 @@ export const fetchProducts = (panelId: string, value: number) => async (dispatch
 
   try {
     const products: IProductInterface[] = await allProducts;
+
+    const categories = products.reduce((acc: string[], { categories }) => {
+      const newCategories = categories.filter(category => !acc.includes(category));
+      return [...acc, ...newCategories];
+    }, []);
+
     dispatch({ type: 'FETCH_PRODUCTS', payload: [...products] });
+    dispatch({ type: 'FETCH_CATEGORIES', payload: [...categories] });
+
   } catch (error) { console.error('ERROR: ', error) }
 };
 
