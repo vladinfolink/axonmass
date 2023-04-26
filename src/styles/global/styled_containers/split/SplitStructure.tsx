@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 import "allotment/dist/style.css";
 import './split_structure.css';
 import { fetchProducts, registerPanelSize } from '../../../../redux_store/actions';
+import Products from '../../../../containers/products/Products';
 
 type SplitStructureProps = { registerPanelSize?: any; fetchProducts?: any}
 
@@ -41,7 +42,12 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
   // -----------------
     useEffect(() => {
       fetchProducts();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+      console.log(11111111111);
+      
+    })
   //------------------
 
   return (
@@ -66,7 +72,7 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
         <Allotment minSize={400}>
           <Allotment.Pane minSize={400}>
             {'compiled Products'}
-            E
+            <Products products={null}/>
           </Allotment.Pane>
         </Allotment>
 
@@ -75,13 +81,9 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
   )
 }
 
-function mapStateToProps(state: any): any {
-  return { ...state }
-};
-
 const mapDispatchToProps: any = {
   registerPanelSize,
   fetchProducts
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SplitStructure)
+export default connect(null, mapDispatchToProps)(SplitStructure)

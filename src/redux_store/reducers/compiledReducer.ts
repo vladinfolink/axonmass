@@ -69,3 +69,23 @@ export const categoriesReducer = (categories: string[] = [], action: { type: str
       return [...categories];
   }
 };
+
+export const sortingReducer = (categories: {
+  alphabetically: boolean;
+  prices: boolean
+} = {
+  alphabetically: false,
+  prices: true
+}, action: { type: string; payload: string[]; }) => {
+  switch (action.type) {
+
+    case 'FETCH_CATEGORIES':
+      return [...action.payload];
+
+    default:
+      return {
+        
+      };
+  }
+};
+

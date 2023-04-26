@@ -105,7 +105,6 @@ export const calculateCost = () => (dispatch: any, getState: any) => {
   )
 }
 
-
 export const transferProductToCart = (filteredElement: any) => async (dispatch: any) => {
 
   dispatch({
@@ -115,6 +114,14 @@ export const transferProductToCart = (filteredElement: any) => async (dispatch: 
 };
 
 export const removeProductFromCart = (filteredElement: any) => async (dispatch: any) => {
+
+  dispatch({
+    type: 'TRANSFER_PRODUCT_TO_CART',
+    payload: 'asd'
+  });
+};
+
+export const sortProducts = (filteredElement: any, getState: any) => async (dispatch: any) => {
 
   dispatch({
     type: 'TRANSFER_PRODUCT_TO_CART',
