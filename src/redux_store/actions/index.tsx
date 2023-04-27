@@ -16,8 +16,7 @@ export const registerPanelSize = (panelId: string, value: number) => async (disp
 };
 
 export const fetchProducts = (panelId: string, value: number) => async (dispatch: any) => {
-  // axios.get("https://man-shopping-cart-test.azurewebsites.net/api/Products");
-
+  // const allProducts: IProductInterface[] = (await axios.get("https://man-shopping-cart-test.azurewebsites.net/api/Products")).data;
 
   const allProducts: Promise<IProductInterface[]> = new Promise((resolve) => {
     setTimeout(() => {
@@ -76,7 +75,6 @@ export const fetchProducts = (panelId: string, value: number) => async (dispatch
 
   try {
     const products: IProductInterface[] = await allProducts;
-
     const categories = products.reduce((acc: string[], { categories }) => {
       const newCategories = categories.filter(category => !acc.includes(category));
       return [...acc, ...newCategories];
@@ -121,10 +119,15 @@ export const removeProductFromCart = (filteredElement: any) => async (dispatch: 
   });
 };
 
-export const sortProducts = (filteredElement: any, getState: any) => async (dispatch: any) => {
+export const sortProducts = (sortFlags: any, getState: any) => async (dispatch: any) => {
+
+
 
   dispatch({
-    type: 'TRANSFER_PRODUCT_TO_CART',
-    payload: 'asd'
+    type: 'SORT_PRODUCTS',
+    payload: {
+      alphabetically: false,
+      prices: false
+    }
   });
 };

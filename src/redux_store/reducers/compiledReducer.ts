@@ -47,7 +47,6 @@ export const cartReducer = (cart: {
   }
 };
 
-
 export const productsReducer = (products: IProductInterface[] = [], action: { type: string; payload: IProductInterface[]; }) => {
   switch (action.type) {
 
@@ -63,7 +62,7 @@ export const categoriesReducer = (categories: string[] = [], action: { type: str
   switch (action.type) {
 
     case 'FETCH_CATEGORIES':
-      return [...action.payload];
+      return [...action.payload]; 
 
     default:
       return [...categories];
@@ -79,7 +78,7 @@ export const sortingReducer = (categories: {
 }, action: { type: string; payload: string[]; }) => {
   switch (action.type) {
 
-    case 'FETCH_CATEGORIES':
+    case 'SORT_PRODUCTS':
       return [...action.payload];
 
     default:
