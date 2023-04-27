@@ -39,14 +39,15 @@ type SorterProps = {
   sortProducts?: (sortBy: string) => (dispatch: any, getState: any) => Promise<void>
 }
 
-function Sorter({width, categories, sortProducts}: SorterProps) {
-  const [sortOrder, setSortOrder] = useState<'price' | 'category'>('price');
+function Sorter({ width, categories, sortProducts }: SorterProps) {
+  const [sortOrder, setSortOrder] = useState<'price' | 'alphabetically' | 'category'>('price');
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedSortOrder = event.target.value as 'price' | 'category';
-    setSortOrder(selectedSortOrder);
-    selectedSortOrder === 'price' && sortProducts && sortProducts(selectedSortOrder)
-    console.log('Selected sort order:', selectedSortOrder);
+    const selectedSortOrder = event.target.value as 'price' | 'alphabetically' | 'category';
+    
+    ['price', 'alphabetically'].includes(selectedSortOrder) && sortProducts && sortProducts(selectedSortOrder);
+
+    setSortOrder(() => selectedSortOrder);
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -62,14 +63,15 @@ function Sorter({width, categories, sortProducts}: SorterProps) {
         <StyledLabel htmlFor="sortOrder">Sort by:</StyledLabel>
         <StyledSelect id="sortOrder" value={sortOrder} onChange={handleSortChange}>
           <option value="price">Price</option>
+          <option value="alphabetically">Alphabetically</option>
           <option value="category">Category</option>
         </StyledSelect>
       </SortOption>
       {sortOrder === 'category' && (
         <SortOption>
           <StyledLabel htmlFor="category">Choose category:</StyledLabel>
-          <StyledSelect id="category" onChange={handleCategoryChange}>
-            <option value="">Select a category</option>
+          <StyledSelect defaultValue={"Select a category"} id="category" onChange={handleCategoryChange}>
+            <option disabled>Select a category</option>
             {categories?.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -89,4 +91,4 @@ function mapStateToProps(state: any): any {
   }
 };
 
-export default connect(mapStateToProps, {sortProducts})(Sorter);
+export default connect(mapStateToProps, { sortProducts })(Sorter);

@@ -125,18 +125,34 @@ export const removeProductFromCart = (productId: number) => async (dispatch: (ar
 };
 
 export const sortProducts = (sortBy: string) => async (dispatch: any, getState: any) => {
-  console.log({sortBy});
-  
   let products = await fetchAllProducts();
 
-  if (sortBy !== "price") {
-    products = products.filter((product: IProductInterface) => {
-      return product.categories.includes(sortBy)
-    });
-
-    console.log('---------->', products);
-    
+  const optionScopes: { [key: string]: any } = {
+    'price': () => {
+      products = [...products];
+    },
+    'alphabetically': () => {
+      products = products.sort((a, b) => a.name.localeCompare(b.name));
+    },
+    // -------------------------------
+    'accessory': () => {
+      products = products.filter((product: IProductInterface) => {
+        return product.categories.includes(sortBy)
+      });
+    },
+    'electronic': () => {
+      products = products.filter((product: IProductInterface) => {
+        return product.categories.includes(sortBy)
+      });
+    },
+    'audio': () => {
+      products = products.filter((product: IProductInterface) => {
+        return product.categories.includes(sortBy)
+      });
+    },
   }
+
+  optionScopes[sortBy]?.();
 
   dispatch({ type: 'FETCH_PRODUCTS', payload: [...products] });
 };
