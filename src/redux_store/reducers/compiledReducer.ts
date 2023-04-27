@@ -90,22 +90,34 @@ export const categoriesReducer = (categories: string[] = [], action: { type: str
   }
 };
 
-export const sortingReducer = (categories: {
-  alphabetically: boolean;
-  prices: boolean
-} = {
-  alphabetically: false,
-  prices: true
-}, action: { type: string; payload: string[]; }) => {
-  switch (action.type) {
+/**
+ 
+  Cart{
+items	[...]
+couponCode	string
+}
 
-    case 'SORT_PRODUCTS':
-      return [...action.payload];
+CartItem{
+productId	integer($int32)
+unitQuantity	integer($int32)
+}
 
-    default:
-      return {
-        
-      };
-  }
-};
+CartCalculationResult{
+itemsCost	number($double)
+shippingCost	number($double)
+discount	number($double)
+finalCost	number($double)
+readOnly: true
+}
 
+Product{
+id	integer($int32)
+name	string
+imageUrl	string
+supplierId	integer($int32)
+wholesalePrice	number($double)
+price	number($double)
+categories	[...]
+}
+
+ */

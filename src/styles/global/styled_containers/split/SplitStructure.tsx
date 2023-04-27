@@ -6,6 +6,7 @@ import "allotment/dist/style.css";
 import './split_structure.css';
 import { fetchProducts, registerPanelSize } from '../../../../redux_store/actions';
 import Products from '../../../../containers/products/Products';
+import Sorter from '../../../../containers/sorter/Sorter';
 
 type SplitStructureProps = { registerPanelSize?: any; fetchProducts?: any}
 
@@ -43,11 +44,6 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
     useEffect(() => {
       fetchProducts();
     }, []);
-
-    useEffect(() => {
-      console.log(11111111111);
-      
-    })
   //------------------
 
   return (
@@ -59,7 +55,7 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
 
             <Allotment.Pane > {/* A */}A </Allotment.Pane>
             <Allotment.Pane> {/* B */}B </Allotment.Pane>
-            <Allotment.Pane> {/* C */}C </Allotment.Pane>
+            <Allotment.Pane> <Sorter/> </Allotment.Pane>
 
           </Allotment>
           <Allotment> 
