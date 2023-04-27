@@ -11,35 +11,56 @@ function removeProductIdFromArray(array: string[], id: string) {
   return [..._items];
 }
 
-export const cartReducer = (cart: {
-  items: string[],
-  couponCode: null | string
-} = {
-    items: [],
-    couponCode: null
-  }, action: { type: string; payload: string; }) => {
+/**\
+ items:
+  productId	integer($int32)
+  unitQuantity	integer($int32)
+
+  couponCode
+ */
+
+  interface CartItemInterface {
+    productId: number;
+    unitQuantity: number;
+  }
+
+  interface CartInterface {
+    items: CartItemInterface[];
+    couponCode?: string;
+  }
+
+  function includeProductInCartItems(cart: CartInterface, productId: number) {
+    const _cart: CartInterface =  JSON.parse(JSON.stringify(cart));
+    const item = _cart.items.find((cartItem) => {
+      return cartItem?.productId === productId
+    });
+
+    if (item) {
+      item.unitQuantity++
+    } else {
+      _cart.items.push({
+        productId, unitQuantity: 1
+      })
+    }
+
+    return { ..._cart, }
+  }
+
+export const cartReducer = (cart: CartInterface = {
+  items: [],
+  couponCode: ''
+}, action: { type: string; payload: number; }) => {
   switch (action.type) {
 
     case 'TRANSFER_PRODUCT_TO_CART':
       return {
-        ...cart,
-        items: [
-          ...cart.items,
-          action.payload
-        ]
+        ...includeProductInCartItems(cart, action.payload)
+
       };
 
     case 'REMOVE_PRODUCT_FROM_CART':
       return {
-        ...cart,
-        items: [
-          ...removeProductIdFromArray(
-            [
-              ...cart.items
-            ],
-            action.payload
-          )
-        ]
+        
       };
 
     default:

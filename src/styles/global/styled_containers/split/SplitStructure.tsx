@@ -72,7 +72,7 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
         <Allotment minSize={400}>
           <Allotment.Pane minSize={400}>
             {'compiled Products'}
-            <Products products={null}/>
+            <Products products={[]} transferProductToCart={() => null}/>
           </Allotment.Pane>
         </Allotment>
 

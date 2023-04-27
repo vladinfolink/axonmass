@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { IProductInterface } from '../../types'
 import Product from './Product';
 import styled from 'styled-components';
+import { transferProductToCart } from '../../redux_store/actions';
 
 const RenderedProducts = styled.div`
   display: flex;
@@ -13,12 +14,13 @@ const RenderedProducts = styled.div`
 `;
 
 interface IProducts {
-  products: IProductInterface[] | null
+  products: IProductInterface[],
+  transferProductToCart: any
 }
 
-const Products = ({ products }: IProducts) => {
+const Products = ({ products, transferProductToCart }: IProducts) => {
 
-  const productsToRender = products ? [...products].map((product: IProductInterface, idx: number) => (<Product key={product.id} product={product} width={0} />)) : 'loading..';
+  const productsToRender = products.length ? [...products].map((product: IProductInterface, idx: number) => (<Product key={product.id} product={product} width={0} transferProductToCart={transferProductToCart} />)) : 'loading..';
 
   const render = <RenderedProducts>
     {productsToRender}
@@ -31,5 +33,5 @@ function mapStateToProps(state: any): any {
   return { products: [...state.products] }
 };
 
-export default connect(mapStateToProps, {})(Products)
+export default connect(mapStateToProps, {transferProductToCart})(Products)
 

@@ -70,7 +70,7 @@ export const fetchProducts = (panelId: string, value: number) => async (dispatch
           }
         ]
       )
-    }, 2000)
+    }, 500)
   });
 
   try {
@@ -103,25 +103,25 @@ export const calculateCost = () => (dispatch: any, getState: any) => {
   )
 }
 
-export const transferProductToCart = (filteredElement: any) => async (dispatch: any) => {
+export const transferProductToCart = (productId: number) => async (dispatch: (arg0: { type: string; payload: number; }) => void) => {
+
+console.log('===>', productId);
 
   dispatch({
     type: 'TRANSFER_PRODUCT_TO_CART',
-    payload: 'asd'
+    payload: productId
   });
 };
 
-export const removeProductFromCart = (filteredElement: any) => async (dispatch: any) => {
+export const removeProductFromCart = (productId: number) => async (dispatch: (arg0: { type: string; payload: string; }) => void) => {
 
   dispatch({
-    type: 'TRANSFER_PRODUCT_TO_CART',
+    type: 'REMOVE_PRODUCT_FROM_CART',
     payload: 'asd'
   });
 };
 
 export const sortProducts = (sortFlags: any, getState: any) => async (dispatch: any) => {
-
-
 
   dispatch({
     type: 'SORT_PRODUCTS',

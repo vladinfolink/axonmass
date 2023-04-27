@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { MdAddShoppingCart } from 'react-icons/md';
 
 interface RenderedProductProps {
   width: number;
@@ -9,6 +10,8 @@ const RenderedProduct = styled.div<RenderedProductProps>`
   flex-basis: calc(33.333% - 1rem);
   margin: 0.5rem;
   height: 405px;
+
+  position: relative;
 
   border: 1px solid;
   border-radius: 6px;
@@ -98,8 +101,27 @@ const ProductPrice = styled.div`
   font-size: 1.2rem;
 `;
 
+const AddToCartIcon = styled.div`
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2196f3;
+  color: white;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+
+  &:hover {
+    background-color: #1e88e5;
+  }
+`;
+
 type IProductInterface = {
-  product?: {
+  product: {
     id: number;
     name: string;
     imageUrl: string;
@@ -108,25 +130,33 @@ type IProductInterface = {
     price: number;
     categories: string[]
   },
-  width: number
+  width: number,
+  transferProductToCart: (productId: number) => (dispatch: (arg0: {
+    type: string;
+    payload: number;
+  }) => void) => Promise<void>
 };
 
-const Product = ({ product, width }: IProductInterface): JSX.Element => {
+const Product = ({ product, width, transferProductToCart }: IProductInterface): JSX.Element => {
+
   return (
     <RenderedProduct width={width}>
       <RenderedProductContent>
         <ProductImageContainer>
-          <ProductImage src={product?.imageUrl} alt={product?.name} />
+          <ProductImage src={product.imageUrl} alt={product?.name} />
         </ProductImageContainer>
         <ProductDetails>
-          <ProductName>{product?.name}</ProductName>
-          <div>ID: {product?.id}</div>
-          <div>Supplier ID: {product?.supplierId}</div>
-          <div>Wholesale Price: {product?.wholesalePrice}</div>
-          <ProductPrice>Price: {product?.price}</ProductPrice>
-          <div>Categories: {product?.categories.join(', ')}</div>
+          <ProductName>{product.name}</ProductName>
+          <div>ID: {product.id}</div>
+          <div>Supplier ID: {product.supplierId}</div>
+          <div>Wholesale Price: {product.wholesalePrice}</div>
+          <ProductPrice>Price: {product.price}</ProductPrice>
+          <div>Categories: {product.categories.join(', ')}</div>
         </ProductDetails>
       </RenderedProductContent>
+      <AddToCartIcon onClick={() => {transferProductToCart(product.id)}}>
+        <MdAddShoppingCart size={24} />
+      </AddToCartIcon>
     </RenderedProduct>
   )
 }
