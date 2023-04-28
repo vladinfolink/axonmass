@@ -49,42 +49,38 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedChangeHandler_X_Y = useMemo(() => debounce(changeHandler, 600), []);
 
-  // -----------------
     useEffect(() => {
       fetchProducts();
-    }, []);
-  //------------------
+    }, [fetchProducts]);
 
-  return (
-    <>
-      <Allotment onChange={(sizes) => debouncedChangeHandler_D_E(sizes, 'D_E')}>
+    const render = <Allotment onChange={(sizes) => debouncedChangeHandler_D_E(sizes, 'D_E')}>;
 
-        <Allotment onChange={(sizes) => debouncedChangeHandler_X_Y(sizes, 'HEIGHTS')} vertical>
-          <Allotment onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
+    <Allotment onChange={(sizes) => debouncedChangeHandler_X_Y(sizes, 'HEIGHTS')} vertical>
+      <Allotment onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
 
-            <Allotment.Pane > {/* A */}A </Allotment.Pane>
-            <Allotment.Pane> {/* B */}B </Allotment.Pane>
-            <Allotment.Pane> <Sorter/> </Allotment.Pane>
-
-          </Allotment>
-          <Allotment> 
-            <OverFlow>
-              <CartProducts />
-            </OverFlow>
-          </Allotment>
-        </Allotment>
-
-        <Allotment minSize={400}>
-          <Allotment.Pane minSize={400}>
-          <OverFlow>
-          <Products products={[]} transferProductToCart={() => null}/>
-          </OverFlow>
-          </Allotment.Pane>
-        </Allotment>
+        <Allotment.Pane > {/* A */} </Allotment.Pane>
+        <Allotment.Pane> {/* B */} </Allotment.Pane>
+        <Allotment.Pane> <Sorter/> </Allotment.Pane>
 
       </Allotment>
-    </>
-  )
+      <Allotment> 
+        <OverFlow>
+          <CartProducts />
+        </OverFlow>
+      </Allotment>
+    </Allotment>
+
+    <Allotment minSize={400}>
+      <Allotment.Pane minSize={400}>
+      <OverFlow>
+      <Products products={[]} />
+      </OverFlow>
+      </Allotment.Pane>
+    </Allotment>
+
+  </Allotment>
+
+  return  render;
 }
 
 export default connect(null, {

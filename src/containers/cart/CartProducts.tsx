@@ -1,17 +1,8 @@
 import CartProduct from './CartProduct';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import { calculateCost } from '../../helpers';
-
-const RenderedProducts = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: -0.5rem;
-  padding: 1rem;
-  margin: 1rem;
-`;
+import { RenderedProducts } from '../../view';
 
 const CartProducts = () => {
   const matchedProducts = useSelector((state: any) => state.cart.matchedProducts);
@@ -26,9 +17,7 @@ const CartProducts = () => {
 
   useEffect(() => {
     (async () => {
-      const totalCost = await calculateCost({ items, couponCode });
-      console.log({ totalCost });
-
+      await calculateCost({ items, couponCode });//TODO
     })();
   }, [items, couponCode])
 

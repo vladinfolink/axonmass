@@ -15,18 +15,18 @@ export const fetchProducts = () => async (dispatch: any) => {
 };
 
 export const transferProductToCart = (productId: number) => async (dispatch: (arg0: { type: string; payload: number; productToMatch?: IProductInterface; }) => void) => {
-  const productToMatch = (await fetchAllProducts()).find((product) => product.id === productId);
+    const productToMatch = (await fetchAllProducts()).find((product) => product.id === productId);
 
-  dispatch({
-    type: 'TRANSFER_PRODUCT_TO_CART',
-    payload: productId
-  });
+    dispatch({
+      type: 'TRANSFER_PRODUCT_TO_CART',
+      payload: productId
+    });
 
-  dispatch({
-    type: 'MATCH_PRODUCT_TO_CART',
-    payload: 0,
-    productToMatch
-  });
+    dispatch({
+      type: 'MATCH_PRODUCT_TO_CART',
+      payload: 0,
+      productToMatch
+    });
 };
 
 export const removeProductFromCart = (productId: number) => async (dispatch: (arg0: { type: string; payload: number; }) => void, getState: any) => {

@@ -1,22 +1,10 @@
-import { connect, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { AddToCartIcon, ProductDetails, ProductImage, ProductImageContainer, ProductName, ProductPrice, RenderedProduct, RenderedProductContent } from '../../view';
+import { IProductInterface } from '../../types';
 
-interface IRenderedProductProps {
-  width: number;
-}
-
-type IProductInterface = {
-  product: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    supplierId: number;
-    wholesalePrice: number;
-    price: number;
-    categories: string[]
-  },
+type IProductPropsInterface = {
+  product: IProductInterface,
   width: number,
   transferProductToCart: (productId: number) => (dispatch: (arg0: {
     type: string;
@@ -24,7 +12,7 @@ type IProductInterface = {
   }) => void) => Promise<void>
 };
 
-const Product = ({ product, transferProductToCart }: IProductInterface): JSX.Element => {
+const Product = ({ product, transferProductToCart }: IProductPropsInterface): JSX.Element => {
   const width = useSelector((state: any) => state.panelSizes.E.width);
 
   return (
@@ -42,7 +30,13 @@ const Product = ({ product, transferProductToCart }: IProductInterface): JSX.Ele
           <div>Categories: {product.categories.join(', ')}</div>
         </ProductDetails>
       </RenderedProductContent>
-      <AddToCartIcon onClick={() => {transferProductToCart(product.id)}}>
+      <AddToCartIcon onClick={() => {
+        try {
+          transferProductToCart(product.id);
+        } catch (error) {
+          console.log('ERROR' + error);
+        }
+      }}>
         <MdAddShoppingCart size={24} />
       </AddToCartIcon>
     </RenderedProduct>

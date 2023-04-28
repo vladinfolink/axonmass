@@ -1,24 +1,11 @@
-import { connect } from 'react-redux'
-import { IProductInterface } from '../../types'
+import { connect, useSelector } from 'react-redux'
+import { IProductInterface, IProductProps } from '../../types'
 import Product from './Product';
-import styled from 'styled-components';
-import { transferProductToCart } from '../../redux_store/actions';
+import { transferProductToCart } from '../../redux_store/actions/products';
+import { RenderedProducts } from '../../view';
 
-const RenderedProducts = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: -0.5rem;
-  padding: 1rem;
-  margin: 1rem;
-`;
-
-interface IProducts {
-  products: IProductInterface[],
-  transferProductToCart: any
-}
-
-const Products = ({ products, transferProductToCart }: IProducts) => {
+const Products = ({ transferProductToCart }: IProductProps) => {
+  const products = useSelector((state: any) => state.products);
 
   const productsToRender = products.length ? [...products].map((product: IProductInterface, idx: number) => (<Product key={product.id} product={product} width={0} transferProductToCart={transferProductToCart} />)) : 'loading..';
 
@@ -29,9 +16,7 @@ const Products = ({ products, transferProductToCart }: IProducts) => {
   return render;
 }
 
-function mapStateToProps(state: any): any {
-  return { products: [...state.products] }
-};
 
-export default connect(mapStateToProps, {transferProductToCart})(Products)
+
+export default connect(null, {transferProductToCart})(Products)
 

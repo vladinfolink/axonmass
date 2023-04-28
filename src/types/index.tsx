@@ -33,7 +33,7 @@ export interface RenderedProductProps {
   width: number;
 }
 
-export type IProductPropsInterface = {
+export type ICartProductPropsInterface = {
   product: {
     id: number;
     name: string;
@@ -46,6 +46,12 @@ export type IProductPropsInterface = {
   },
   width: number
 };
+
+export interface IProductProps {
+  products: IProductInterface[],
+  transferProductToCart: any
+}
+
 
 /**
  Cart{
