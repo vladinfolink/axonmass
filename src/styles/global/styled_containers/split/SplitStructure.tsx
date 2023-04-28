@@ -10,6 +10,7 @@ import CartProducts from '../../../../containers/cart/CartProducts';
 import styled from 'styled-components';
 import { registerPanelSize } from '../../../../redux_store/actions/panels';
 import { fetchProducts } from '../../../../redux_store/actions/products';
+import PromoCodes from '../../../../containers/PromoCodes/PromoCodes';
 
 const OverFlow = styled.div`
   width: 100%;
@@ -59,7 +60,7 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
       <Allotment onChange={(sizes) => debouncedChangeHandler_A_B_C(sizes, 'A_B_C')}>
 
         <Allotment.Pane > {/* A */} </Allotment.Pane>
-        <Allotment.Pane> {/* B */} </Allotment.Pane>
+        <Allotment.Pane> {/* B */}<PromoCodes /> </Allotment.Pane>
         <Allotment.Pane> <Sorter/> </Allotment.Pane>
 
       </Allotment>

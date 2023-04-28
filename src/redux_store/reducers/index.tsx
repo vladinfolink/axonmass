@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
-import { cartReducer, categoriesReducer, productsReducer } from './compiledReducer';
+import { cartReducer, categoriesReducer, costsReducer, productsReducer } from './compiledReducer';
 import panelSizesReducer from './panelSizesReducer';
 
 export const combinedReducers = combineReducers({
   panelSizes: panelSizesReducer,
   products: productsReducer,
   categories: categoriesReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  costs: costsReducer
 });
 
 /**

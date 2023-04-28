@@ -12,7 +12,7 @@ type IProductPropsInterface = {
   }) => void) => Promise<void>
 };
 
-const Product = ({ product, transferProductToCart }: IProductPropsInterface): JSX.Element => {
+const Product = ({ product, transferProductToCart }: IProductPropsInterface) => {
   const width = useSelector((state: any) => state.panelSizes.E.width);
 
   return (

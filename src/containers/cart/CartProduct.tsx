@@ -3,7 +3,7 @@ import { MdAdd, MdRemove } from 'react-icons/md';
 import { ICartProductPropsInterface } from '../../types';
 import { CartRenderedProduct, CartRenderedProductContent, CartProductImageContainer, CartProductImage, CartProductDetails, CartProductName, CartProductPrice, IconContainer, StyledIcon } from '../../view';
 
-const CartProduct = ({ product }: ICartProductPropsInterface): JSX.Element => {
+const CartProduct = ({ product }: ICartProductPropsInterface) => {
   const dispatch = useDispatch();
   const width = useSelector((state: any) => state.panelSizes.D.width);
 

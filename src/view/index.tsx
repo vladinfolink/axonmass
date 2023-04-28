@@ -275,4 +275,38 @@ export const StyledSelect = styled.select`
   appearance: none;
 `;
 
+export const InputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`;
+
+export const PromoInput = styled.input`
+  width: 70%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const ApplyButton = styled.button`
+  width: 25%;
+  padding: 0.5rem;
+  background-color: grey;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #3D3D3D;
+  }
+`;
+
+export const PromoListItem = styled.div`
+  padding: 0.5rem;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
 export type sortOrderCategories = 'price' | 'alphabetically' | 'category';

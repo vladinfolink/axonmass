@@ -52,6 +52,14 @@ export interface IProductProps {
   transferProductToCart: any
 }
 
+export type PromoCodeInterface = {
+  Code: string;
+  Description: string;
+  Type: number;
+  Discount?: number;
+  Category?: string;
+};
+
 
 /**
  Cart{

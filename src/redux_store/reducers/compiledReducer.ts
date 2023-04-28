@@ -84,10 +84,54 @@ export const cartReducer = (cart: CartInterface = {
         ...decreaseProductInCart({...cart},  action.payload)
       }
 
+      case 'APPLY_COUPON_CODE':
+      return {
+        ...cart, couponCode: action.payload
+      }
+
     default:
       return { ...cart };
   }
 };
+
+    /**
+    discount
+    : 
+    0.4
+    finalCost
+    : 
+    10.6
+    itemsCost
+    : 
+    4
+    shippingCost
+    : 
+    7
+     */
+
+    interface CostsInterface {
+      discount: number;
+      finalCost: number;
+      itemsCost: number;
+      shippingCost: number;
+    }
+
+// POPULATE_COSTS
+export const costsReducer = (costs: CostsInterface = {
+  discount: 0,
+  finalCost: 0,
+  itemsCost: 0,
+  shippingCost: 0
+}, action: { type: string; payload: CostsInterface; productToMatch: IProductInterface }) => {
+  switch (action.type) {
+
+    case 'POPULATE_COSTS':
+      return { ...costs, ...action.payload };
+    default:
+      return { ...costs };
+  }
+};
+
 
 export const productsReducer = (products: IProductInterface[] = [], action: { type: string; payload: IProductInterface[]; }) => {
   switch (action.type) {
