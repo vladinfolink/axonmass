@@ -68,7 +68,7 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
           </Allotment>
           <Allotment> 
             <OverFlow>
-              <CartProducts products={[]} transferProductToCart={() => null}/>
+              <CartProducts />
             </OverFlow>
           </Allotment>
         </Allotment>
@@ -86,9 +86,7 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
   )
 }
 
-const mapDispatchToProps: any = {
+export default connect(null, {
   registerPanelSize,
   fetchProducts
-}
-
-export default connect(null, mapDispatchToProps)(SplitStructure)
+})(SplitStructure)

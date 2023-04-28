@@ -13,6 +13,27 @@ export interface MatchedProductInterface extends IProductInterface {
   unitQuantity: number
 }
 
+export interface CartItemInterface {
+  productId: number;
+  unitQuantity: number;
+}
+
+export interface CartInterface {
+  items: CartItemInterface[];
+  couponCode?: string;
+}
+
+export interface MatchedProductsInterface {
+  matchedProducts: {
+    [key: number]: MatchedProductInterface
+  };
+}
+
+export interface CartInterface extends MatchedProductsInterface {
+  items: CartItemInterface[];
+  couponCode?: string;
+} 
+
 
 /**
  Cart{

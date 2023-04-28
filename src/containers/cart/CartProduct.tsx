@@ -110,7 +110,8 @@ type IProductInterface = {
     supplierId: number;
     wholesalePrice: number;
     price: number;
-    categories: string[]
+    categories: string[],
+    unitQuantity: number
   },
   width: number,
   transferProductToCart: (productId: number) => (dispatch: (arg0: {
@@ -158,17 +159,17 @@ const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
           </StyledIcon>
         </IconContainer>
         <ProductImageContainer>
-          <ProductImage src={product.imageUrl} alt={product?.name} />
+          <ProductImage src={product?.imageUrl} alt={product?.name} />
         </ProductImageContainer>
         <ProductDetails>
-          <ProductName>{product.name}</ProductName>
-          <div>QUANTITY: {product.id}</div>
+          <ProductName>{product?.name}</ProductName>
+          <div>QUANTITY: {product?.unitQuantity}</div>
 
-          <div>ID: {product.id}</div>
-          <div>Supplier ID: {product.supplierId}</div>
-          <div>Wholesale Price: {product.wholesalePrice}</div>
-          <ProductPrice>Price: {product.price}</ProductPrice>
-          <div>Categories: {product.categories.join(', ')}</div>
+          <div>ID: {product?.id}</div>
+          <div>Supplier ID: {product?.supplierId}</div>
+          <div>Wholesale Price: {product?.wholesalePrice}</div>
+          <ProductPrice>Price: {product?.price}</ProductPrice>
+          <div>Categories: {product?.categories?.join(', ')}</div>
         </ProductDetails>
       </RenderedProductContent>
     </RenderedProduct>
@@ -177,7 +178,7 @@ const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
 
 function mapStateToProps(state: any): any {
   return {
-    width: state.panelSizes.E.width,
+    width: state.panelSizes.D.width,
     // matchedProduct: state.cart.matchedProducts.find(mP => mP)
   }
 };

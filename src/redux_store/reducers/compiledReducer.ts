@@ -1,4 +1,4 @@
-import { IProductInterface, MatchedProductInterface } from "../../types";
+import { CartInterface, IProductInterface, MatchedProductInterface } from "../../types";
 
 function removeProductIdFromArray(array: string[], id: string) {
   const _items = [...array];
@@ -19,26 +19,7 @@ function removeProductIdFromArray(array: string[], id: string) {
   couponCode
  */
 
-interface CartItemInterface {
-  productId: number;
-  unitQuantity: number;
-}
 
-interface CartInterface {
-  items: CartItemInterface[];
-  couponCode?: string;
-}
-
-interface MatchedProductsInterface {
-  matchedProducts: {
-    [key: number]: MatchedProductInterface
-  };
-}
-
-interface CartInterface extends MatchedProductsInterface {
-  items: CartItemInterface[];
-  couponCode?: string;
-}
 
 function includeProductInCartItems(cart: CartInterface, productId: number) {
   const _cart: CartInterface = JSON.parse(JSON.stringify(cart));
