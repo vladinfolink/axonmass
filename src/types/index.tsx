@@ -9,6 +9,11 @@ export interface IProductInterface {
   categories: string[]
 }
 
+export interface MatchedProductInterface extends IProductInterface {
+  unitQuantity: number
+}
+
+
 /**
  Cart{
 items	[...]

@@ -162,6 +162,8 @@ const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
         </ProductImageContainer>
         <ProductDetails>
           <ProductName>{product.name}</ProductName>
+          <div>QUANTITY: {product.id}</div>
+
           <div>ID: {product.id}</div>
           <div>Supplier ID: {product.supplierId}</div>
           <div>Wholesale Price: {product.wholesalePrice}</div>
@@ -174,7 +176,10 @@ const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
 }
 
 function mapStateToProps(state: any): any {
-  return { width: state.panelSizes.E.width }
+  return {
+    width: state.panelSizes.E.width,
+    // matchedProduct: state.cart.matchedProducts.find(mP => mP)
+  }
 };
 
 export default connect(mapStateToProps, {})(CartProduct);

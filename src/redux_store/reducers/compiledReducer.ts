@@ -1,4 +1,4 @@
-import { IProductInterface } from "../../types";
+import { IProductInterface, MatchedProductInterface } from "../../types";
 
 function removeProductIdFromArray(array: string[], id: string) {
   const _items = [...array];
@@ -19,37 +19,67 @@ function removeProductIdFromArray(array: string[], id: string) {
   couponCode
  */
 
-  interface CartItemInterface {
-    productId: number;
-    unitQuantity: number;
+interface CartItemInterface {
+  productId: number;
+  unitQuantity: number;
+}
+
+interface CartInterface {
+  items: CartItemInterface[];
+  couponCode?: string;
+}
+
+interface MatchedProductsInterface {
+  matchedProducts: {
+    [key: number]: MatchedProductInterface
+  };
+}
+
+interface CartInterface extends MatchedProductsInterface {
+  items: CartItemInterface[];
+  couponCode?: string;
+}
+
+function includeProductInCartItems(cart: CartInterface, productId: number) {
+  const _cart: CartInterface = JSON.parse(JSON.stringify(cart));
+  const item = _cart.items.find((cartItem) => {
+    return cartItem?.productId === productId
+  });
+
+  if (item) {
+    item.unitQuantity++
+  } else {
+    _cart.items.push({
+      productId, unitQuantity: 1
+    })
   }
 
-  interface CartInterface {
-    items: CartItemInterface[];
-    couponCode?: string;
-  }
+  return { ..._cart, }
+};
 
-  function includeProductInCartItems(cart: CartInterface, productId: number) {
-    const _cart: CartInterface =  JSON.parse(JSON.stringify(cart));
-    const item = _cart.items.find((cartItem) => {
-      return cartItem?.productId === productId
-    });
+function matchProductToCart(cart: CartInterface, productToMatch: IProductInterface) {
+  const _cart: CartInterface = JSON.parse(JSON.stringify(cart));
+  const item = _cart.matchedProducts[productToMatch.id];
 
-    if (item) {
-      item.unitQuantity++
-    } else {
-      _cart.items.push({
-        productId, unitQuantity: 1
-      })
+  console.log({item})
+
+  if (item) {
+    item.unitQuantity++
+  } else {
+    _cart.matchedProducts[productToMatch.id] = {
+      ...productToMatch,
+      unitQuantity: 1
     }
-
-    return { ..._cart, }
   }
+
+  return { ..._cart, }
+}
 
 export const cartReducer = (cart: CartInterface = {
   items: [],
-  couponCode: ''
-}, action: { type: string; payload: number; }) => {
+  couponCode: '',
+  matchedProducts: {}
+}, action: { type: string; payload: number; productToMatch: IProductInterface }) => {
   switch (action.type) {
 
     case 'TRANSFER_PRODUCT_TO_CART':
@@ -58,9 +88,12 @@ export const cartReducer = (cart: CartInterface = {
 
       };
 
+    case 'MATCH_PRODUCT_TO_CART':
+      return matchProductToCart({ ...cart }, action.productToMatch)
+
     case 'REMOVE_PRODUCT_FROM_CART':
       return {
-        
+
       };
 
     default:
@@ -83,7 +116,7 @@ export const categoriesReducer = (categories: string[] = [], action: { type: str
   switch (action.type) {
 
     case 'FETCH_CATEGORIES':
-      return [...action.payload]; 
+      return [...action.payload];
 
     default:
       return [...categories];
