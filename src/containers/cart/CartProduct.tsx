@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { MdAdd, MdRemove } from 'react-icons/md';
 
@@ -145,7 +145,11 @@ const StyledIcon = styled.div`
     color: #333;
 `;
 
-const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
+const CartProduct = ({ product }: IProductInterface): JSX.Element => {
+  const dispatch = useDispatch();
+  const width = useSelector((state: any) => state.panelSizes.D.width);
+
+
 
   return (
     <RenderedProduct width={width}>
@@ -154,7 +158,14 @@ const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
           <StyledIcon onClick={() => {/* handle minus icon click */}}>
             <MdRemove size={18} />
           </StyledIcon>
-          <StyledIcon onClick={() => {/* handle plus icon click */}}>
+          <StyledIcon  onClick={() => {
+            dispatch({ type: 'TRANSFER_PRODUCT_TO_CART', payload: product.id });
+            dispatch({
+              type: 'MATCH_PRODUCT_TO_CART',
+              payload: 0,
+              productToMatch: { ...product }
+            });
+          }}>
             <MdAdd size={18} />
           </StyledIcon>
         </IconContainer>
@@ -176,11 +187,4 @@ const CartProduct = ({ product, width }: IProductInterface): JSX.Element => {
   )
 }
 
-function mapStateToProps(state: any): any {
-  return {
-    width: state.panelSizes.D.width,
-    // matchedProduct: state.cart.matchedProducts.find(mP => mP)
-  }
-};
-
-export default connect(mapStateToProps, {})(CartProduct);
+export default CartProduct;
