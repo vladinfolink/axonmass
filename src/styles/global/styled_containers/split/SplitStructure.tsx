@@ -7,6 +7,14 @@ import './split_structure.css';
 import { fetchProducts, registerPanelSize } from '../../../../redux_store/actions';
 import Products from '../../../../containers/products/Products';
 import Sorter from '../../../../containers/sorter/Sorter';
+import CartProducts from '../../../../containers/cart/CartProducts';
+import styled from 'styled-components';
+
+const OverFlow = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+`;
 
 type SplitStructureProps = { registerPanelSize?: any; fetchProducts?: any}
 
@@ -59,16 +67,17 @@ function SplitStructure({ registerPanelSize, fetchProducts }: SplitStructureProp
 
           </Allotment>
           <Allotment> 
-            <div>
-              asdasdassdassdasd
-            </div>
+            <OverFlow>
+              <CartProducts products={[]} transferProductToCart={() => null}/>
+            </OverFlow>
           </Allotment>
         </Allotment>
 
         <Allotment minSize={400}>
           <Allotment.Pane minSize={400}>
-            {'compiled Products'}
-            <Products products={[]} transferProductToCart={() => null}/>
+          <OverFlow>
+          <Products products={[]} transferProductToCart={() => null}/>
+          </OverFlow>
           </Allotment.Pane>
         </Allotment>
 
