@@ -1,124 +1,11 @@
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { MdAddShoppingCart } from 'react-icons/md';
+import { AddToCartIcon, ProductDetails, ProductImage, ProductImageContainer, ProductName, ProductPrice, RenderedProduct, RenderedProductContent } from '../../view';
 
-interface RenderedProductProps {
+interface IRenderedProductProps {
   width: number;
 }
-
-const RenderedProduct = styled.div<RenderedProductProps>`
-  flex-basis: calc(33.333% - 1rem);
-  margin: 0.5rem;
-  height: 405px;
-
-  position: relative;
-
-  border: 1px solid;
-  border-radius: 6px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4rem;
-
-  overflow: auto;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  text-overflow: ellipsis;
-  
-  ${props => {
-    if (props.width > 1000) {
-      return 'flex-basis: calc(25% - 1rem);';
-    } else if (props.width > 800) {
-      return 'flex-basis: calc(33.33% - 1rem);';
-    } else if (props.width > 480) {
-      return 'flex-basis: calc(50% - 1rem);';
-    } else {
-      return 'flex-basis: calc(100% - 1rem);';
-    }
-  }}
-
-  &::-webkit-scrollbar {
-    width: 6px; 
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-    border-radius: 10px; 
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #888; 
-    border-radius: 10px;appearance
-    background-clip: content-box;box of the thumb
-    border: 1px solid transparent; 
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: #555; 
-  }
-`;
-
-const RenderedProductContent = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-`;
-
-const ProductImageContainer = styled.div`
-  width: 100%;
-  height: 75%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f1f1f1;
-`;
-
-const ProductImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-`;
-
-const ProductDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  padding: 0.5rem;
-`;
-
-const ProductName = styled.div`
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-`;
-
-const ProductPrice = styled.div`
-  font-size: 1.2rem;
-`;
-
-const AddToCartIcon = styled.div`
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #2196f3;
-  color: white;
-  border-radius: 50%;
-  height: 3rem;
-  width: 3rem;
-
-  &:hover {
-    background-color: #1e88e5;
-  }
-`;
 
 type IProductInterface = {
   product: {
@@ -137,7 +24,8 @@ type IProductInterface = {
   }) => void) => Promise<void>
 };
 
-const Product = ({ product, width, transferProductToCart }: IProductInterface): JSX.Element => {
+const Product = ({ product, transferProductToCart }: IProductInterface): JSX.Element => {
+  const width = useSelector((state: any) => state.panelSizes.E.width);
 
   return (
     <RenderedProduct width={width}>
@@ -161,8 +49,4 @@ const Product = ({ product, width, transferProductToCart }: IProductInterface): 
   )
 }
 
-function mapStateToProps(state: any): any {
-  return { width: state.panelSizes.E.width }
-};
-
-export default connect(mapStateToProps, {})(Product);
+export default Product;

@@ -1,10 +1,8 @@
-import { connect } from 'react-redux'
-import { IProductInterface, MatchedProductInterface, MatchedProductsInterface } from '../../types'
 import CartProduct from './CartProduct';
 import styled from 'styled-components';
-import { shallowEqual, useSelector } from 'react-redux'
-import { transferProductToCart } from '../../redux_store/actions';
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
+import { calculateCost } from '../../helpers';
 
 const RenderedProducts = styled.div`
   display: flex;
@@ -19,11 +17,20 @@ const CartProducts = () => {
   const matchedProducts = useSelector((state: any) => state.cart.matchedProducts);
   const products = Object.values(matchedProducts)
 
-  const productsToRender = products.length ? [...products].map((product: any, idx: number) => (<CartProduct key={product.id} product={product} width={0} transferProductToCart={transferProductToCart} />)) : 'Your cart is empty';
+  const productsToRender = products.length ? [...products].map((product: any, idx: number) => (<CartProduct key={product.id} product={product} width={0} />)) : 'Your cart is empty';
 
   const render = <RenderedProducts>
     {productsToRender}
   </RenderedProducts>
+  const { items, couponCode } = useSelector((state: any) => state.cart);
+
+  useEffect(() => {
+    (async () => {
+      const totalCost = await calculateCost({ items, couponCode });
+      console.log({ totalCost });
+
+    })();
+  }, [items, couponCode])
 
   return render;
 }

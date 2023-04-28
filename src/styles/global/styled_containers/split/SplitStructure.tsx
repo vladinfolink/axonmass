@@ -4,11 +4,12 @@ import { Allotment } from "allotment";
 import debounce from 'lodash/debounce';
 import "allotment/dist/style.css";
 import './split_structure.css';
-import { fetchProducts, registerPanelSize } from '../../../../redux_store/actions';
 import Products from '../../../../containers/products/Products';
 import Sorter from '../../../../containers/sorter/Sorter';
 import CartProducts from '../../../../containers/cart/CartProducts';
 import styled from 'styled-components';
+import { registerPanelSize } from '../../../../redux_store/actions/panels';
+import { fetchProducts } from '../../../../redux_store/actions/products';
 
 const OverFlow = styled.div`
   width: 100%;

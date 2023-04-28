@@ -111,6 +111,17 @@ export const categoriesReducer = (categories: string[] = [], action: { type: str
   }
 };
 
+export const totalCost = (categories: string[] = [], action: { type: string; payload: string[]; }) => {
+  switch (action.type) {
+
+    case 'TOTAL_COST':
+      return [...action.payload];
+
+    default:
+      return [...categories];
+  }
+};
+
 /**
  
   Cart{

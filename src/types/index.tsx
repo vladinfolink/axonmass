@@ -18,11 +18,6 @@ export interface CartItemInterface {
   unitQuantity: number;
 }
 
-export interface CartInterface {
-  items: CartItemInterface[];
-  couponCode?: string;
-}
-
 export interface MatchedProductsInterface {
   matchedProducts: {
     [key: number]: MatchedProductInterface
@@ -34,6 +29,23 @@ export interface CartInterface extends MatchedProductsInterface {
   couponCode?: string;
 } 
 
+export interface RenderedProductProps {
+  width: number;
+}
+
+export type IProductPropsInterface = {
+  product: {
+    id: number;
+    name: string;
+    imageUrl: string;
+    supplierId: number;
+    wholesalePrice: number;
+    price: number;
+    categories: string[],
+    unitQuantity: number
+  },
+  width: number
+};
 
 /**
  Cart{
