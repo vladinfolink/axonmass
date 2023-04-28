@@ -149,20 +149,20 @@ const CartProduct = ({ product }: IProductInterface): JSX.Element => {
   const dispatch = useDispatch();
   const width = useSelector((state: any) => state.panelSizes.D.width);
 
-
-
   return (
     <RenderedProduct width={width}>
       <RenderedProductContent>
         <IconContainer>
-          <StyledIcon onClick={() => {/* handle minus icon click */}}>
+          <StyledIcon onClick={() => {
+            dispatch({ type: 'REMOVE_PRODUCT_FROM_CART', payload: product.id });
+           
+          }}>
             <MdRemove size={18} />
           </StyledIcon>
           <StyledIcon  onClick={() => {
             dispatch({ type: 'TRANSFER_PRODUCT_TO_CART', payload: product.id });
             dispatch({
               type: 'MATCH_PRODUCT_TO_CART',
-              payload: 0,
               productToMatch: { ...product }
             });
           }}>

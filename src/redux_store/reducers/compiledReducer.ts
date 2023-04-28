@@ -1,16 +1,5 @@
 import { CartInterface, IProductInterface, MatchedProductInterface } from "../../types";
 
-function removeProductIdFromArray(array: string[], id: string) {
-  const _items = [...array];
-
-  const index = _items.indexOf(id);
-  if (index !== -1) {
-    _items.splice(index, 1);
-  }
-
-  return [..._items];
-}
-
 /**\
  items:
   productId	integer($int32)
@@ -18,8 +7,6 @@ function removeProductIdFromArray(array: string[], id: string) {
 
   couponCode
  */
-
-
 
 function includeProductInCartItems(cart: CartInterface, productId: number) {
   const _cart: CartInterface = JSON.parse(JSON.stringify(cart));
@@ -42,8 +29,6 @@ function matchProductToCart(cart: CartInterface, productToMatch: IProductInterfa
   const _cart: CartInterface = JSON.parse(JSON.stringify(cart));
   const item = _cart.matchedProducts[productToMatch.id];
 
-  console.log({item})
-
   if (item) {
     item.unitQuantity++
   } else {
@@ -55,6 +40,28 @@ function matchProductToCart(cart: CartInterface, productToMatch: IProductInterfa
 
   return { ..._cart, }
 }
+
+function decreaseProductInCart(cart: CartInterface, productId: number) {
+  const _cart: CartInterface = JSON.parse(JSON.stringify(cart));
+  const item = _cart.items.find((cartItem) => {
+    return cartItem?.productId === productId;
+  });
+  const matchedProduct = _cart.matchedProducts[productId];
+
+  const idx = _cart.items.findIndex((cartItem) => {
+    return cartItem?.productId === productId;
+  })
+
+  if (!!item && (item?.unitQuantity > 1)) {
+    item.unitQuantity--;
+    matchedProduct.unitQuantity--;
+  } else {
+    _cart.items.splice(idx, 1);
+    delete _cart.matchedProducts[productId];
+  }
+
+  return { ..._cart, }
+};
 
 export const cartReducer = (cart: CartInterface = {
   items: [],
@@ -74,8 +81,8 @@ export const cartReducer = (cart: CartInterface = {
 
     case 'REMOVE_PRODUCT_FROM_CART':
       return {
-
-      };
+        ...decreaseProductInCart({...cart},  action.payload)
+      }
 
     default:
       return { ...cart };

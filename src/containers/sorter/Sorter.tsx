@@ -50,10 +50,8 @@ function Sorter({ width, categories, sortProducts }: SorterProps) {
     setSortOrder(() => selectedSortOrder);
   };
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const categoryChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     sortProducts && sortProducts(event.target.value)
-
-    console.log('Selected category:', event.target.value);
   };
 
   return (
@@ -70,7 +68,7 @@ function Sorter({ width, categories, sortProducts }: SorterProps) {
       {sortOrder === 'category' && (
         <SortOption>
           <StyledLabel htmlFor="category">Choose category:</StyledLabel>
-          <StyledSelect defaultValue={"Select a category"} id="category" onChange={handleCategoryChange}>
+          <StyledSelect defaultValue={"Select a category"} id="category" onChange={categoryChangeHandler}>
             <option disabled>Select a category</option>
             {categories?.map((category) => (
               <option key={category} value={category}>
